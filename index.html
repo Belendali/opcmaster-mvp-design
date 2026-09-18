@@ -722,8 +722,8 @@ body.inner #dg-halftone{-webkit-mask-image:linear-gradient(to top,#000 0%,rgba(0
 body:not(.in-app):not(.inner){background:#0F0F0F}
 .hero{background:#0E0D0C}
 .nav::before{background:rgba(15,15,15,.6)}
-.hero-shell .edge{background:radial-gradient(440px circle at var(--mx,50%) var(--my,50%),rgba(241,226,200,.8),rgba(224,179,106,.16) 45%,rgba(255,255,255,.05) 72%)}
-.hero-shell .halo{background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(224,179,106,.4),rgba(185,120,107,.18) 45%,transparent 70%)}
+.hero-shell .edge{background:radial-gradient(440px circle at var(--mx,50%) var(--my,50%),rgba(241,226,200,.45),rgba(224,179,106,.1) 45%,rgba(255,255,255,.04) 72%)}
+.hero-shell .halo{background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(224,179,106,.2),rgba(185,120,107,.08) 45%,transparent 70%)}
 #loop::before{background:radial-gradient(40% 60% at 30% 70%,rgba(224,179,106,.08),transparent 70%),radial-gradient(30% 50% at 75% 60%,rgba(185,120,107,.08),transparent 70%)}
 .final{background:radial-gradient(60% 120% at 0% 100%,rgba(185,120,107,.14),transparent 60%),radial-gradient(50% 120% at 100% 0%,rgba(224,179,106,.12),transparent 60%),var(--glass)}
 .ask-go{color:#111}
@@ -1738,7 +1738,7 @@ var heroLoop = function(){}, heroIntro = function(){}, diagLoop = function(){}, 
   "  pal=mix(pal,vec3(.73,.47,.42),smoothstep(.35,.95,-n)*.7);",
   "  pal=mix(pal,vec3(.85,.64,.29),step(.965,hsh)*.55*k);",
   "  float tw=step(.994,hsh)*(.5+.5*sin(t*2.+hsh*40.));",
-  "  float a=pl*(k*(.42+.58*hsh)+tw*.45+h*.4)*step(.16,hsh+k*.9);",
+  "  float a=pl*(k*(.42+.58*hsh)+tw*.45+h*.16)*step(.16,hsh+k*.9);",
   "  outc=mix(vec3(.059),pal,clamp(a,0.,1.)*intro);",
   " }",
   "gl_FragColor=vec4(outc,1.);}"
