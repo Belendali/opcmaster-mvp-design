@@ -758,6 +758,10 @@ body.inner .seg{border-radius:4px;background:#1B1B1A}body.inner .seg button{bord
 .ws-ctl-row .l{flex:1;min-width:170px;display:flex;flex-direction:column}
 .ws-ctl-row.ws-auto{padding-top:12px;border-top:1px solid var(--glass-line)}
 .cb-intro{font-size:13px;line-height:1.6;color:var(--ink-2);padding:12px 14px;border:1px dashed var(--line-2);border-radius:6px}
+
+.stepper .step-go{display:inline-flex;align-items:center;gap:8px;color:inherit;border-radius:6px;padding:2px 4px;margin:-2px -4px}
+.stepper .step-go:hover{color:var(--ink)}
+.stepper .step-go:hover .sn{box-shadow:0 0 0 3px var(--accent-soft)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 </style>
 
@@ -1333,7 +1337,9 @@ function part(id, html){ var el = $(id); if(el && partCache[id]!==html){ el.inne
 function stepper(active){
   var names = ["dg.step1","dg.step2","dg.step3"];
   return '<ol class="stepper dg-in">'+names.map(function(k,i){ var n = i+1, cls = n<active?"done":(n===active?"on":"");
-    return (i?'<li class="sep" aria-hidden="true"></li>':'')+'<li class="'+cls+'"><span class="sn">'+(n<active?I.check:n)+'</span>'+t(k)+'</li>'; }).join("")+'</ol>';
+    var inner = '<span class="sn">'+(n<active?I.check:n)+'</span>'+t(k);
+    if(n<active) inner = '<button type="button" class="step-go" data-act="dg-step" data-p="'+["analyze","confirm","scope"][i]+'">'+inner+'</button>';
+    return (i?'<li class="sep" aria-hidden="true"></li>':'')+'<li class="'+cls+'"'+(n===active?' aria-current="step"':'')+'>'+inner+'</li>'; }).join("")+'</ol>';
 }
 function renderDiagParts(){
   if(!S.diag) return;
@@ -1363,7 +1369,7 @@ function renderDiag(){
         '<label for="dg-brand">'+t("c.brand")+'<input id="dg-brand" value="'+esc(S.undBrand)+'"></label>'+
         '<label for="dg-what">'+t("c.what")+'<textarea id="dg-what" rows="2">'+esc(what)+'</textarea></label>'+
         '<div><button class="btn btn-line" data-act="dg-save">'+t("c.save")+'</button></div></div></details>'+
-      '<div class="dg-actions dg-in">'+arrowBtn("c.ok","dg-next")+'<button class="btn btn-quiet" data-act="dg-skip">'+t("c.skip")+'</button><button class="btn btn-quiet" data-act="dg-back">'+t("back")+'</button></div>'+
+      '<div class="dg-actions dg-in">'+arrowBtn("c.ok","dg-next")+'<button class="btn btn-quiet" data-act="dg-skip">'+t("c.skip")+'</button></div>'+
       '<p class="fine dg-in">'+t("c.note")+'</p>';
     $("diag-body").innerHTML = h; return;
   }
@@ -1375,7 +1381,7 @@ function renderDiag(){
       '<div class="scope-grid dg-in"><div class="card card-pad"><div class="card-t">'+t("s.q")+'</div><ul class="qlist">'+qs+'</ul><div class="fine">'+t("s.qn")+'</div></div>'+
       '<div class="card card-pad"><div class="card-t">'+t("s.b")+'</div><div class="brands" style="margin:12px 0">'+brands+'</div><div class="fine">'+t("s.bn")+'</div></div></div>'+
       '<details class="dg-more dg-in"><summary>'+t("s.adjust")+'</summary><div class="card card-pad" style="margin-top:10px"><ol class="qlist num">'+allq+'</ol><p class="fine" style="margin-top:10px">'+t("s.adjustd")+'</p></div></details>'+
-      '<div class="dg-actions dg-in" id="dg-act">'+arrowBtn("s.start","dg-start")+'<button class="btn btn-quiet" data-act="dg-skip">'+t("s.skip")+'</button><button class="btn btn-quiet" data-act="dg-back">'+t("back")+'</button></div>';
+      '<div class="dg-actions dg-in" id="dg-act">'+arrowBtn("s.start","dg-start")+'<button class="btn btn-quiet" data-act="dg-skip">'+t("s.skip")+'</button></div>';
     $("diag-body").innerHTML = h; if(ph==="running") renderDiagParts(); return;
   }
   h = '<div class="dg-head dg-in"><div class="kicker">'+t("rp.kicker",{date:t("d16")})+'</div><h1>'+t("rp.h1",{brand:esc(S.undBrand),m:6})+'</h1><p class="dg-sub">'+t("rp.sub")+'</p></div>'+
@@ -1651,6 +1657,7 @@ async function act(name, el){
     case "apply": if(!S.user){ S.pending = "apply"; openAuth("signup"); break; } push({type:"user", key:"u.apply"}); S.fs = "draft"; render(); break;
     case "login": openAuth("login"); break;
     case "dg-next": goPhase(S.diag.phase==="analyze"?"confirm":"scope"); break;
+    case "dg-step": var to = el.getAttribute("data-p"); goPhase(to); if(to==="analyze"){ S.stepsDone = 3; renderDiagParts(); } break;
     case "dg-back": goPhase(S.diag.phase==="scope"?"confirm":"analyze"); if(S.diag.phase==="analyze"){ S.stepsDone = 3; renderDiagParts(); } break;
     case "dg-save": S.undBrand = $("dg-brand").value.trim()||S.undBrand; S.undWhat = $("dg-what").value.trim()||null; S.und = "edited"; renderDiag(); toast(t("c.saved")); break;
     case "dg-start": runMeasure(); break;
