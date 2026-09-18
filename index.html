@@ -882,6 +882,9 @@ body.ws-mode .plan-switch{display:inline-flex;padding:3px;border-radius:999px;ba
 .ci-confirm{padding:8px 10px;border:1px solid var(--line-2);border-radius:6px;background:#161616;font-size:12px}
 .ci-confirm p{margin:0 0 8px;color:var(--ink-2)}
 .ci-confirm div{display:flex;gap:6px}
+
+.ws-foot .ws-more{margin-bottom:8px;padding-top:12px;border-top:1px solid var(--glass-line)}
+.ws-foot .ws-more .ws-item{font-size:13px;padding:5px 10px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 </style>
 
@@ -1619,9 +1622,9 @@ function wsSide(){
     h += '<div class="ci-row"><button class="ws-item'+(W.conv===id?' on':'')+(m.kind==="site"?' site':'')+'" data-act="ws-conv" data-c="'+id+'"><span class="ci-t">'+(m.kind==="site"?'<i class="hash">#</i>':'')+esc(convName(id))+(m.unread?'<i class="nd"></i>':'')+'</span><small><i class="'+convDot(id)+'"></i>'+convStatus(id)+'</small></button>'+
       (m.kind==="site"?'<button class="ci-more" data-act="ws-cmenu" data-c="'+id+'" aria-label="'+t("w.cm.more")+'" aria-expanded="'+(W.menu===id)+'">⋯</button>'+(W.menu===id?'<div class="ci-menu" role="menu"><button role="menuitem" data-act="ws-rename" data-c="'+id+'">'+t("w.cm.rename")+'</button><button role="menuitem" class="danger" data-act="ws-del" data-c="'+id+'">'+t("w.cm.delete")+'</button></div>':''):'')+'</div>'; });
   h += '</div>';
-  h += '<div class="ws-group"><div class="ws-gh">'+t("w.nav.more")+'</div>';
+  h += '<div class="ws-foot"><div class="ws-group ws-more"><div class="ws-gh">'+t("w.nav.more")+'</div>';
   ["w.more.briefs","w.more.rank","w.more.audit","w.more.cms"].forEach(function(k){ h += '<button class="ws-item row" data-act="ws-soon"><span>'+t(k)+'</span><span class="soon">'+t("w.soon")+'</span></button>'; });
-  h += '</div><div class="ws-foot">';
+  h += '</div>';
   if(S.user) h += '<button data-act="ws-soon"><span class="av-s">'+esc(S.user.email.charAt(0).toUpperCase())+'</span><span>'+esc(S.user.email)+'</span></button>';
   return h+'</div>';
 }
