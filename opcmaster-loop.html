@@ -1560,9 +1560,9 @@ function wsSide(){
   h += '<div class="ws-group"><div class="ws-gh">'+t("w.nav.more")+'</div>';
   ["w.more.briefs","w.more.rank","w.more.audit","w.more.cms"].forEach(function(k){ h += '<button class="ws-item row" data-act="ws-soon"><span>'+t(k)+'</span><span class="soon">'+t("w.soon")+'</span></button>'; });
   h += '</div>';
-  h += '<div class="ws-foot"><button data-act="ws-tour">'+t("tour.open")+'</button><button data-act="ws-soon">'+t("w.nav.scope")+'</button><button data-act="lang">'+t("lang.name")+'</button>';
+  h += '<div class="ws-foot">';
   if(S.user) h += '<button data-act="ws-soon"><span class="av-s">'+esc(S.user.email.charAt(0).toUpperCase())+'</span><span>'+esc(S.user.email)+'</span></button>';
-  h += '<button data-act="home">'+t("side.back")+'</button></div>';
+  h += '</div>';
   return h;
 }
 
