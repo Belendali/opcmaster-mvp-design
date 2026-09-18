@@ -832,6 +832,14 @@ body.inner .seg{border-radius:4px;background:#1B1B1A}body.inner .seg button{bord
 .pv-faq{list-style:none!important;padding:0!important;margin:12px 0 0!important;display:grid;gap:0!important}
 .pv-faq li{display:flex;justify-content:space-between;padding:10px 2px;border-bottom:1px solid #E4E0D8;font-size:13px;color:#1C1B19}
 .pv-faq li span{color:#8A857C}
+
+/* A / B / C layout switch, shown in the workspace next to the prototype button */
+.plan-switch{display:none}
+body.ws-mode .proto{display:flex;align-items:center;gap:8px}
+body.ws-mode .plan-switch{display:inline-flex;padding:3px;border-radius:999px;background:rgba(255,233,168,.85);box-shadow:0 6px 18px -8px rgba(0,0,0,.35)}
+.plan-switch button{width:30px;height:28px;border-radius:999px;font-family:var(--mono);font-size:13px;font-weight:600;color:#6B5A1E}
+.plan-switch button:hover{color:#3B2F00;background:rgba(255,255,255,.35)}
+.plan-switch button.on{background:#3B2F00;color:#FFE9A8}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 </style>
 
@@ -1002,6 +1010,7 @@ body.inner .seg{border-radius:4px;background:#1B1B1A}body.inner .seg button{bord
     <hr>
     <button type="button" data-act="lang"><span>Aa</span><b data-i18n="lang.name"></b></button>
   </div>
+  <div class="plan-switch" role="group" aria-label="Layout plan"><button type="button" data-act="plan" data-plan="A" title="A">A</button><button type="button" data-act="plan" data-plan="B" title="B">B</button><button type="button" data-act="plan" data-plan="C" title="C">C</button></div>
   <button class="proto-btn" type="button" id="proto-btn" aria-expanded="false"><i></i><span data-i18n="proto.btn"></span></button>
 </div>
 
@@ -1790,7 +1799,7 @@ async function act(name, el){
   var id = runId;
   try{
   switch(name){
-    case "lang": S.lang = S.lang==="en"?"zh":"en"; try{ localStorage.setItem("opc-lang", S.lang); }catch(e){} applyStatic(); cache = {}; if(S.view==="diag") renderDiag(); if(S.view==="ws") renderWS(); render(); renderPreview(); renderAuth(); break;
+    case "lang": S.lang = S.lang==="en"?"zh":"en"; try{ localStorage.setItem("opc-lang", S.lang); }catch(e){} applyStatic(); markPlan(); cache = {}; if(S.view==="diag") renderDiag(); if(S.view==="ws") renderWS(); render(); renderPreview(); renderAuth(); break;
     case "demo": startCheck("answerai.pro"); break;
     case "home": resetApp(); show("landing"); break;
     case "totop": window.scrollTo({top:0, behavior:"smooth"}); setTimeout(function(){ $("site-url").focus({preventScroll:true}); }, 400); break;
@@ -2057,7 +2066,7 @@ var heroLoop = function(){}, heroIntro = function(){}, diagLoop = function(){}, 
 })();
 if(!diagLoop.kick) diagLoop.kick = function(){};
 
-function markPlan(){ document.querySelectorAll('[data-act="plan"]').forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-plan")===PLAN); }); }
+function markPlan(){ document.querySelectorAll('[data-act="plan"]').forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-plan")===PLAN); }); document.querySelectorAll(".plan-switch button").forEach(function(b){ b.title = t("plan."+b.getAttribute("data-plan")); }); }
 /* ------------------------------------------------------------------ boot */
 applyStatic(); renderPreview(); markPlan();
 if(location.hash==="#app") jump("finding");
