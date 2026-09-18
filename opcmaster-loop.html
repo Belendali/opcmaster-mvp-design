@@ -567,11 +567,11 @@ body.in-app .proto{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
 :root:not([data-theme="dark"]) .side .logo-mark{filter:invert(1) brightness(.35)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .side .logo-mark{filter:none}}
 /* ================= WORKSPACE (conversation + dashboard) ================= */
-body.ws-mode .proto{top:calc(12px + env(safe-area-inset-top,0px));bottom:auto;right:404px}
+body.ws-mode .proto{top:calc(12px + env(safe-area-inset-top,0px));bottom:auto;right:500px}
 body.ws-mode .proto-menu{top:44px;bottom:auto}
-@media (max-width:1180px){body.ws-mode .proto{right:360px}}
+@media (max-width:1180px){body.ws-mode .proto{right:436px}}
 @media (max-width:900px){body.ws-mode .proto{right:16px}}
-.ws{display:grid;grid-template-columns:240px minmax(0,1fr) 384px;height:100%;position:relative;isolation:isolate;background:var(--bg);color:var(--ink)}
+.ws{display:grid;grid-template-columns:240px minmax(0,1fr) 480px;height:100%;position:relative;isolation:isolate;background:var(--bg);color:var(--ink)}
 .ws::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:radial-gradient(38% 46% at 6% 4%,var(--amb1),transparent 70%),radial-gradient(40% 50% at 98% 100%,var(--amb2),transparent 70%),radial-gradient(30% 36% at 60% 10%,var(--amb3),transparent 70%)}
 .ws-side{display:flex;flex-direction:column;gap:18px;padding:14px 12px;min-height:0;overflow-y:auto;background:var(--glass);border-right:1px solid var(--glass-line);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur)}
@@ -659,7 +659,7 @@ body.ws-mode .proto-menu{top:44px;bottom:auto}
 .ws-chat-f textarea:focus{border-color:var(--accent)}
 .ws-chat-f .row{display:flex;justify-content:flex-end}
 
-@media (max-width:1180px){.ws{grid-template-columns:220px minmax(0,1fr) 340px}}
+@media (max-width:1180px){.ws{grid-template-columns:220px minmax(0,1fr) 416px}}
 @media (max-width:900px){
   body.in-app.ws-mode{overflow:auto}
   .ws{display:flex;flex-direction:column;height:auto;min-height:100%}
@@ -729,8 +729,8 @@ body:not(.in-app):not(.inner){background:#0F0F0F}
 .ask-go{color:#111}
 
 /* faint star floor behind the workspace dashboard (side + chat panels stay solid) */
-body.ws-mode #dg-halftone{position:absolute;left:240px;right:auto;width:calc(100% - 240px - 384px);height:58%;opacity:.75}
-@media (max-width:1180px){body.ws-mode #dg-halftone{left:220px;width:calc(100% - 220px - 340px)}}
+body.ws-mode #dg-halftone{position:absolute;left:240px;right:auto;width:calc(100% - 240px - 480px);height:58%;opacity:.75}
+@media (max-width:1180px){body.ws-mode #dg-halftone{left:220px;width:calc(100% - 220px - 416px)}}
 @media (max-width:900px){body.ws-mode #dg-halftone{display:none}}
 
 /* workspace: user-triggered checks + optional auto-check */
