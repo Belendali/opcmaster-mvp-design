@@ -2,7 +2,7 @@
 
 Clickable prototype for the pagewise MVP ad test: a site owner checks whether ChatGPT recommends their business, gets a ready-written fix, decides, and sees if it worked — all in one conversation.
 
-**Live prototype:** https://belendali.github.io/opcmaster-mvp-design/
+**Live prototype:** https://belendali.github.io/pagewise-mvp-design/
 **Figma (section V1.0):** https://www.figma.com/design/7l0mqLoO0VOp1o4416Amgh
 
 ## Flow
