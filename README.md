@@ -17,7 +17,10 @@ What the MVP tests: will site owners try an SEO/GEO tool through a **conversatio
    - C06 Decide in chat: the assistant shows the exact change; *Use this* or *Not now*; or discuss only, without a draft.
    - C07 Review original and changes (optional), with save history folded away.
    - C08 Coming back: picks up the saved draft, stays quiet when there's nothing new.
-5. Publishing, re-checks and the rest of the Frase feature set are marked **Coming soon**.
+5. **One chat per page.** Each check's suggestions go into the chat for that page. A later check adds new messages to an existing page chat (e.g. a second suggestion for the pricing page), opens a new chat only for a page that shows up for the first time (e.g. the homepage), and doesn't repeat suggestions you skipped. Site-wide questions get their own chat (`+ New chat`).
+6. CMS publishing and the rest of the Frase feature set are marked **Coming soon**.
+
+Prototype menu → C09 shows check #2 (overview, pricing page follow-up, new homepage chat, flashcards result). Try the suggested questions in a page chat to see what stays in the chat and what moves to a new one.
 
 Use the yellow **Prototype** button to jump to any screen (C02–C08). The language switch covers English and 中文.
 
