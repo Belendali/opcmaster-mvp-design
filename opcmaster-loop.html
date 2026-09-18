@@ -762,6 +762,34 @@ body.inner .seg{border-radius:4px;background:#1B1B1A}body.inner .seg button{bord
 .stepper .step-go{display:inline-flex;align-items:center;gap:8px;color:inherit;border-radius:6px;padding:2px 4px;margin:-2px -4px}
 .stepper .step-go:hover{color:var(--ink)}
 .stepper .step-go:hover .sn{box-shadow:0 0 0 3px var(--accent-soft)}
+
+/* tasks in chat + overview; first-visit tour */
+.tasks .tasks-h{display:flex;justify-content:space-between;gap:10px;font-weight:600}
+.tasks .tasks-h .muted{font-weight:400}
+.tk-list{display:flex;flex-direction:column}
+.tk{display:flex;gap:10px;align-items:center;text-align:left;padding:10px 14px;border-top:1px solid var(--glass-line);width:100%}
+.tk:first-child{border-top:0}
+.tk:hover{background:var(--surface-2)}
+.tk.on{background:#1B1B1A;box-shadow:inset 2px 0 0 var(--accent)}
+.tk .tn,.ws-trow .tn{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-family:var(--mono);font-size:11px;border:1px solid var(--line-2);color:var(--ink-2);flex:none}
+.tk.done .tn,.ws-trow .tn.done{background:var(--good);color:#111;border-color:transparent}
+.tk .tn svg,.ws-trow .tn svg{width:11px;height:11px}
+.tt{min-width:0}.tt b{display:block;font-weight:500;font-size:13px;color:var(--ink)}.tt small{font-size:12px;color:var(--ink-3)}
+.tk.done .tt b{color:var(--ink-2)}
+.cb-div{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--ink-3);font-family:var(--mono);margin-top:4px}
+.cb-div::before,.cb-div::after{content:"";flex:1;height:1px;background:var(--glass-line)}
+.ws-tasklist{border:1px solid var(--glass-line);border-radius:6px;overflow:hidden;background:var(--glass-strong)}
+.ws-trow{display:flex;align-items:center;gap:12px;padding:12px 16px;border-top:1px solid var(--glass-line);flex-wrap:wrap}
+.ws-trow:first-child{border-top:0}
+.ws-trow .t{flex:1;min-width:200px}.ws-trow .t b{display:block;font-weight:500;font-size:14px}.ws-trow .t small{font-size:12px;color:var(--ink-3)}
+.ws-gh span{font-family:var(--mono);font-size:11px}
+.tour{position:fixed;inset:0;z-index:65}
+.tour-hole{position:absolute;border-radius:10px;box-shadow:0 0 0 9999px rgba(0,0,0,.66);outline:1px solid rgba(224,179,106,.55);transition:all .3s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.tour-card{position:absolute;display:flex;flex-direction:column;gap:6px;padding:16px 16px 14px;border-radius:6px;background:#161616;border:1px solid #2A2A28;color:#F1EEE8;box-shadow:0 30px 60px -20px #000;animation:in-up .3s both}
+.tour-card small{font-size:11px;color:#6F6B64}
+.tour-card b{font-size:16px;font-weight:600}
+.tour-card p{margin:0;font-size:14px;line-height:1.55;color:#A9A59D}
+.tour-a{display:flex;justify-content:flex-end;gap:8px;margin-top:8px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 </style>
 
@@ -902,6 +930,7 @@ body.inner .seg{border-radius:4px;background:#1B1B1A}body.inner .seg button{bord
 
 <div class="auth" id="auth" hidden role="dialog" aria-modal="true" aria-labelledby="auth-title"></div>
 
+<div class="tour" id="tour" hidden></div>
 <div class="toast" id="toast" role="status"></div>
 
 <div class="proto" id="proto">
@@ -913,6 +942,7 @@ body.inner .seg{border-radius:4px;background:#1B1B1A}body.inner .seg button{bord
     <button type="button" data-jump="scope"><span>C04</span><b data-i18n="proto.c04"></b></button>
     <button type="button" data-jump="auth"><span>··</span><b data-i18n="proto.auth"></b></button>
     <button type="button" data-jump="c05"><span>C05</span><b data-i18n="proto.c05"></b></button>
+    <button type="button" data-jump="tour"><span>··</span><b data-i18n="proto.tour"></b></button>
     <button type="button" data-jump="c06"><span>C06</span><b data-i18n="proto.c06"></b></button>
     <button type="button" data-jump="c06b"><span>C06</span><b data-i18n="proto.c06b"></b></button>
     <button type="button" data-jump="c06c"><span>C06</span><b data-i18n="proto.c06c"></b></button>
@@ -935,7 +965,7 @@ body.inner .seg{border-radius:4px;background:#1B1B1A}body.inner .seg button{bord
 var Q4 = "How do I turn meeting notes into action items?";
 var T = {
 en:{
- "d18full":"Sep 18 · 14:20","w.ctl.manual2":"Runs only when you ask · check #{n} · last {d}","w.ov.fixes":"Fixes in progress","w.ov.nofixes":"No fixes yet. When the assistant suggests one and you open it, it shows up here.","w.topic.name":"Meetings page · add a FAQ","w.nav.topics":"Fixes","w.nav.notopics":"No fixes yet","w.c.title":"Your optimization assistant","w.c.intro":"This is where we work on getting your site mentioned more by AI. After each check I'll tell you what could be improved. You decide what to do, and you can tell me once you've made a change.","w.c.found":"This check found {n} things to improve. Let's start with the one most worth doing:","w.c.seeAll":"See all {n}","w.c.opt1":"Meetings page: add a FAQ on turning notes into action items.","w.c.opt2":"Pricing page: compare yourself with similar tools.","w.c.opt3":"Homepage: say plainly who it's for (small teams).","w.c.oneAtATime":"I'll bring them up one at a time. Once you've dealt with one, the next appears. You can also ask about any of them now.", "w.toast.checked":"Check complete", "d18":"Sep 18","d19":"Sep 19","d21":"Sep 21","d25":"Sep 25","w.ctl.h":"Checks","w.ctl.manual":"Run when you ask · last check {d}","w.ctl.now":"Check now","w.ctl.running":"Checking · {n}/10","w.auto.label":"Auto-check","w.auto.off":"Off","w.auto.next":"Next check {d} · turn off anytime","w.freq.daily":"Daily","w.freq.3d":"Every 3 days","w.freq.weekly":"Weekly","w.ov.lastAt":"Last check {d}","w.ov.vs":"+{n} vs Sep 16","w.ov.latest.checked":"Checked again · your site cited +1","w.ov.latest.same":"Checked again · no change yet","w.st.live":"On your site · not checked yet","w.st.checked":"Checked · cited +1","w.c.addH":"Put it on your site","w.c.addLead":"Your site isn't connected, so paste it yourself:","w.c.s1":"Copy the FAQ","w.c.copy":"Copy","w.c.copied":"Copied","w.c.s2":"Paste it into your meetings page","w.c.open":"Open page ↗","w.c.s3":"Tell me when it's live","w.c.live":"It's on my site","w.c.liveU":"It's on my site.","w.c.liveA":"Nice. Want to see if it worked? Checks only run when you ask. ChatGPT can take a few days to pick up changes.","w.c.checkNow":"Check now","w.c.autoOffer":"Or I can check automatically and tell you what changed:","w.c.autoOn":"Auto-check is on: {f}. I'll check, compare and suggest the next fix. Turn it off anytime on the dashboard.","w.c.checking":"Asking ChatGPT the same 10 questions · {n}/10","w.c.result":"Checked. For “How do I turn meeting notes into action items?”, ChatGPT now mentions you and cites your meetings page. Overall: mentioned 7/10 (was 6), your site cited 3/10 (was 2).","w.c.resultNote":"One check is a snapshot; answers vary between runs.","w.c.nochange":"Checked again with the same 10 questions. Nothing changed since Sep 16.","w.c.next":"Next: your pricing page isn't compared in “Best AI meeting notes app for small teams”.","w.c.nextBtn":"See the change","w.c.nextProto":"(Prototype) The next change opens here, the same way: see it, then use it or skip it.","w.rv.publishH2":"Put it on your website","w.rv.publishP2":"Copy the text and paste it into your page yourself. Publishing straight to your CMS is coming later.","w.toast.open":"Prototype: this opens your page in a new tab","w.toast.autoOn":"Auto-check on · {f}","w.toast.autoOff":"Auto-check off","proto.c08b":"C08 · It's on my site","proto.c09":"C09 · Checked again",
+ "t1.title":"Meetings page · add a FAQ","t1.why":"ChatGPT doesn't mention you for “How do I turn meeting notes into action items?”","t1.page":"Meetings page","t2.title":"Pricing page · compare with similar tools","t2.why":"You aren't compared in “Best AI meeting notes app for small teams”","t2.page":"Pricing page","t3.title":"Homepage · say who it's for","t3.why":"You're missing from “Meeting notes software for startups”","t3.page":"Homepage","tst.todo":"To review","tst.open":"Change ready","tst.adopted":"Draft saved · paste it","tst.live":"On your site","tst.checked":"Checked · cited +1","tst.declined":"Skipped","w.open":"Open","w.tasks.h":"{n} things to improve","w.tasks.progress":"{d} of 3 done","w.c.found2":"Your first check is done. I found 3 things to improve. Open them one at a time; each comes with the exact text to add.","w.c.welcomeBack":"Welcome back. {d} of 3 fixes are done; the rest are still here.","w.c.declined2":"Okay, this page stays as it is. I won't bring this one up again.","w.c.addLead2":"Your site isn't connected, so paste it into your {p} yourself:","w.c.s1b":"Copy the text","w.c.s2b":"Paste it into your {p}","w.c.liveMore":"Done. AI answers usually take a few days to reflect a change, so checking right now rarely shows anything. Finish the other fixes first, and let me check for you in a few days:","w.c.liveAll":"All fixes are handled. AI answers usually take a few days to reflect changes. Let me check for you in a few days:","w.c.auto3d":"Check every 3 days","w.c.checkAnyway":"Check now anyway","w.c.nextTask":"Next: {n}. {x}","w.rv.keepAdd2":"Keep the original, add this","tour.open":"Product tour","tour.skip":"Skip","tour.next":"Next","tour.done":"Got it","tour.1.t":"Your project","tour.1.d":"Your website lives here. You have one project for now; you'll be able to add more later.","tour.2.t":"Your dashboard","tour.2.d":"Records how often ChatGPT mentions and cites your site, every time you check.","tour.3.t":"Your assistant","tour.3.d":"This is where we work on getting you mentioned more. After each check, suggestions show up here as tasks you can go through one by one.","proto.tour":"Product tour", "d18full":"Sep 18 · 14:20","w.ctl.manual2":"Runs only when you ask · check #{n} · last {d}","w.ov.fixes":"Fixes in progress","w.ov.nofixes":"No fixes yet. When the assistant suggests one and you open it, it shows up here.","w.topic.name":"Meetings page · add a FAQ","w.nav.topics":"Fixes","w.nav.notopics":"No fixes yet","w.c.title":"Your optimization assistant","w.c.intro":"This is where we work on getting your site mentioned more by AI. After each check I'll tell you what could be improved. You decide what to do, and you can tell me once you've made a change.","w.c.found":"This check found {n} things to improve. Let's start with the one most worth doing:","w.c.seeAll":"See all {n}","w.c.opt1":"Meetings page: add a FAQ on turning notes into action items.","w.c.opt2":"Pricing page: compare yourself with similar tools.","w.c.opt3":"Homepage: say plainly who it's for (small teams).","w.c.oneAtATime":"I'll bring them up one at a time. Once you've dealt with one, the next appears. You can also ask about any of them now.", "w.toast.checked":"Check complete", "d18":"Sep 18","d19":"Sep 19","d21":"Sep 21","d25":"Sep 25","w.ctl.h":"Checks","w.ctl.manual":"Run when you ask · last check {d}","w.ctl.now":"Check now","w.ctl.running":"Checking · {n}/10","w.auto.label":"Auto-check","w.auto.off":"Off","w.auto.next":"Next check {d} · turn off anytime","w.freq.daily":"Daily","w.freq.3d":"Every 3 days","w.freq.weekly":"Weekly","w.ov.lastAt":"Last check {d}","w.ov.vs":"+{n} vs Sep 16","w.ov.latest.checked":"Checked again · your site cited +1","w.ov.latest.same":"Checked again · no change yet","w.st.live":"On your site · not checked yet","w.st.checked":"Checked · cited +1","w.c.addH":"Put it on your site","w.c.addLead":"Your site isn't connected, so paste it yourself:","w.c.s1":"Copy the FAQ","w.c.copy":"Copy","w.c.copied":"Copied","w.c.s2":"Paste it into your meetings page","w.c.open":"Open page ↗","w.c.s3":"Tell me when it's live","w.c.live":"It's on my site","w.c.liveU":"It's on my site.","w.c.liveA":"Nice. Want to see if it worked? Checks only run when you ask. ChatGPT can take a few days to pick up changes.","w.c.checkNow":"Check now","w.c.autoOffer":"Or I can check automatically and tell you what changed:","w.c.autoOn":"Auto-check is on: {f}. I'll check, compare and suggest the next fix. Turn it off anytime on the dashboard.","w.c.checking":"Asking ChatGPT the same 10 questions · {n}/10","w.c.result":"Checked. For “How do I turn meeting notes into action items?”, ChatGPT now mentions you and cites your meetings page. Overall: mentioned 7/10 (was 6), your site cited 3/10 (was 2).","w.c.resultNote":"One check is a snapshot; answers vary between runs.","w.c.nochange":"Checked again with the same 10 questions. Nothing changed since Sep 16.","w.c.next":"Next: your pricing page isn't compared in “Best AI meeting notes app for small teams”.","w.c.nextBtn":"See the change","w.c.nextProto":"(Prototype) The next change opens here, the same way: see it, then use it or skip it.","w.rv.publishH2":"Put it on your website","w.rv.publishP2":"Copy the text and paste it into your page yourself. Publishing straight to your CMS is coming later.","w.toast.open":"Prototype: this opens your page in a new tab","w.toast.autoOn":"Auto-check on · {f}","w.toast.autoOff":"Auto-check off","proto.c08b":"C08 · It's on my site","proto.c09":"C09 · Checked again",
   "d16full":"Sep 16 · 09:00","w.nav.overview":"Site overview","w.nav.startsite":"Start from your site","w.nav.results":"Drafts & results","w.nav.noresults":"No results yet","w.nav.more":"More","w.nav.scope":"Site profile & scope","w.soon":"Soon","w.more.briefs":"Content briefs","w.more.rank":"Rank tracking","w.more.audit":"Site audit","w.more.cms":"CMS publishing","w.topic.site":"About your site","w.topic.page":"Meetings page","w.topic.siteH":"Your site's description","w.topic.siteSub":"Starting from your site's context. The assistant only writes a draft when you ask for one.","w.topic.home":"Homepage description","w.topic.orig":"Site original · kept","w.topic.record":"Original record · kept","w.topic.ans":"Related answer and sources","w.topic.ansLab":"Original answer · example #04","w.topic.notm":"Doesn't mention Northstar Notes · doesn't cite your site","w.topic.ansMeta":"Sep 16, 09:00 · same example engine · US / English","w.topic.ansNote":"Example data only, no real answer URL. The real product keeps the full answer, sources and citations. One missing citation isn't proof of cause.","w.topic.openChange":"Open original and changes","w.topic.openDraft":"Open saved draft","w.topic.openOrig":"Open kept original","w.topic.ctx":"Site context loaded; no single check selected yet.","w.ov.h1":"Visibility","w.ov.lastfull":"last full check","w.m.mentioned":"Brand mentioned","w.m.cited":"Your site cited","w.ov.measuring":"First check in progress · asking ChatGPT {n}/10","w.ov.details":"Metric details","w.ov.pos":"Relative position","w.ov.meta":"Sep 16, 09:00 · US / English · same example engine","w.ov.sample":"10 questions · 8 brands · first full sample, so no comparable change yet.","w.ov.scopeNote":"This describes only this sample. It isn't a global ranking or traffic. Original answers and citations open inside topics.","w.ov.latest":"Latest update","w.ov.latest.run":"First check in progress","w.ov.latest.done":"First check complete","w.ov.latest.none":"No new check yet","w.ov.recent":"Recent chats","w.ov.norecent":"No chats yet","w.ov.more":"More dashboards","w.st.pending":"1 change to review","w.st.pendingSite":"1 change to review · site unchanged","w.st.adopted":"Saved · not published","w.st.declined":"Original kept","w.st.discussion":"Discussing · no draft","w.res.faq":"Meetings page FAQ","w.res.orig":"Meetings page original","w.see.change":"See the change","w.see.draft":"See draft","w.see.orig":"See original","w.cont":"Continue chat","w.rv.crumb":"Changes","w.rv.back":"Back to chat","w.rv.notpub":"Not published","w.rv.unchanged":"Unchanged","w.rv.saved":"Saved site original","w.rv.keepAdd":"Keep the original, add a FAQ","w.rv.draft":"Saved draft","w.rv.kept":"Kept original","w.rv.notChanged":"Not changed this time.","w.rv.hist":"Source and save history","w.rv.src":"Site original","w.rv.srcNote":"Saved from the meetings page. All hand edits and saved content are kept; using a change creates a new save record and never overwrites the source.","w.rv.v.pending":"Original v1 · suggestion based on v1","w.rv.v.adopted":"Site original v1 kept · draft v2 has the original plus the full Q&A","w.rv.v.declined":"Site original v1 kept · suggestion not applied","w.rv.publishH":"Need it on your website?","w.rv.publishP":"Just ask in this chat. We'll only connect your CMS when needed, show the target page and the change, then ask you to confirm.","w.rv.publishSoon":"Publishing · coming soon","w.c.current":"Current: {x}","w.c.suggest":"The action-items part of your meetings page could use a short FAQ.","w.c.see":"See the change","w.c.measuring":"I'm running your first check. Ask me anything meanwhile.","w.c.ccH":"Meetings page · add a FAQ","w.c.orig":"Site original","w.c.new":"New","w.c.use":"Use this","w.c.notnow":"Not now","w.c.hint":"Saves to draft · doesn't publish","w.c.useU":"Use this.","w.c.notnowU":"Not now.","w.c.savedMsg":"Saved to draft. Your website hasn't changed.","w.c.declinedMsg":"Okay, no FAQ this time. Your original stays as it is.","w.c.pendingLeft":"The FAQ I prepared is waiting in the topic.","w.c.seeDraft":"See saved draft","w.c.seeOrig":"See kept original","w.c.earlier":"Earlier messages","w.c.firstOrig":"first site original","w.c.prepared":"Prepared change:","w.c.discU":"Help me check if my site's description is easy to understand first. Don't write anything yet.","w.c.discA":"Sure, let's review the current description first. This answer doesn't cite your site, so we can't tell why yet.","w.c.phStart":"Or just tell me what you want to do…","w.c.phMore":"Tell me what else to change…","w.c.phReturn":"Pick up where we left off…","w.c.chat":"Chat","w.c.send":"Send","w.c.free":"Free chat is coming soon in this prototype. Use the buttons above to keep going.","w.toast.soon":"Coming soon","w.toast.done":"First check complete","a.skip":"Skip waiting, chat first","c.skip":"Later — chat first","s.skip":"Chat first, set up later","auth.workspace.t":"Create your workspace","auth.workspace.s":"Keep your site, your checks and your chats in one place. Free, no credit card.","proto.c02":"C02 Analyzing","proto.c03":"C03 Confirm business","proto.c04":"C04 Scope","proto.auth":"Create workspace","proto.c05":"C05 Workspace","proto.c06":"C06 Decide in chat","proto.c06b":"C06 · Used","proto.c06c":"C06 · Not now","proto.c06d":"C06 · Discuss only","proto.c07":"C07 Review changes","proto.c07b":"C07 · Saved draft","proto.c08":"C08 Coming back",
   "dg.step1":"Your website","dg.step2":"Your business","dg.step3":"Questions","back":"Back",
  "a.kicker":"Getting to know your website","a.sub":"First we read your site, then prepare questions about your business.","a.r1":"Read public pages","a.r1d":"3 pages","a.r2":"Understand your business and customers","a.r3":"Prepare questions","a.r3d":"10 questions","a.working":"Working…","a.waiting":"Not started","a.cont":"See what we found",
@@ -1002,7 +1032,7 @@ en:{
  "proto.btn":"Prototype","proto.h":"Jump to a step","proto.landing":"Homepage","proto.checking":"Checking the site","proto.finding":"First fix","proto.draft":"After “Use this fix”","proto.scheduled":"Waiting to check again","proto.return":"Coming back · results"
 },
 zh:{
- "d18full":"9 月 18 日 14:20","w.ctl.manual2":"你发起时才检查 · 第 {n} 次检查 · 上次 {d}","w.ov.fixes":"进行中的优化","w.ov.nofixes":"还没有优化项。右侧助手给出建议、你点开之后，会出现在这里。","w.topic.name":"会议页面 · 补充 FAQ","w.nav.topics":"优化项","w.nav.notopics":"还没有优化项","w.c.title":"你的优化助手","w.c.intro":"我们在这里一起看看，怎样让你的网站在 AI 大模型里获得更多曝光。每次检查完，我都会在这里告诉你有哪些可以优化的地方，由你决定是否执行；改完之后也可以告诉我。","w.c.found":"这次检查找到 {n} 处可以优化的地方，先看最值得做的一处：","w.c.seeAll":"查看全部 {n} 处","w.c.opt1":"会议页面：补一段「如何把会议记录变成待办」的 FAQ。","w.c.opt2":"定价页：和同类工具做个对比。","w.c.opt3":"首页：写清楚是给谁用的（小团队）。","w.c.oneAtATime":"我会一次推一条，你处理完一条再出下一条；也可以现在直接问我其中任何一条。", "w.toast.checked":"检查完成", "d18":"9 月 18 日","d19":"9 月 19 日","d21":"9 月 21 日","d25":"9 月 25 日","w.ctl.h":"检查","w.ctl.manual":"你发起时才检查 · 上次 {d}","w.ctl.now":"立即检查","w.ctl.running":"检查中 · {n}/10","w.auto.label":"自动检查","w.auto.off":"关闭","w.auto.next":"下次检查 {d} · 随时可关闭","w.freq.daily":"每天","w.freq.3d":"每 3 天","w.freq.weekly":"每周","w.ov.lastAt":"上次检查 {d}","w.ov.vs":"较 9 月 16 日 +{n}","w.ov.latest.checked":"已再次检查 · 本站被引用 +1","w.ov.latest.same":"已再次检查 · 暂无变化","w.st.live":"已放到网站 · 还没检查","w.st.checked":"已检查 · 引用 +1","w.c.addH":"放到你的网站上","w.c.addLead":"网站还没有连接，需要你自己粘贴：","w.c.s1":"复制这段 FAQ","w.c.copy":"复制","w.c.copied":"已复制","w.c.s2":"粘贴到会议页面","w.c.open":"打开页面 ↗","w.c.s3":"放上去后告诉我","w.c.live":"已经放到网站上了","w.c.liveU":"已经放到网站上了。","w.c.liveA":"好的。想看看有没有效果吗？检查只在你发起时才运行。ChatGPT 可能需要几天才会注意到改动。","w.c.checkNow":"立即检查","w.c.autoOffer":"也可以让我自动定期检查，有变化时告诉你：","w.c.autoOn":"已开启自动检查：{f}。我会检查、对比，并给出下一条建议。随时可以在看板上关闭。","w.c.checking":"正在用同样的 10 个问题询问 ChatGPT · {n}/10","w.c.result":"检查完了。问到「How do I turn meeting notes into action items?」时，ChatGPT 现在会提到你，并引用你的会议页面。整体：品牌被提及 7/10（原来 6），本站被引用 3/10（原来 2）。","w.c.resultNote":"一次检查只是快照，每次的回答会有波动。","w.c.nochange":"用同样的 10 个问题又查了一次，和 9 月 16 日相比没有变化。","w.c.next":"下一条：问到「Best AI meeting notes app for small teams」时，你的定价页没有被拿来比较。","w.c.nextBtn":"看看改动","w.c.nextProto":"（原型）下一条改动会以同样方式出现在这里：先看，再决定采用或跳过。","w.rv.publishH2":"放到你的网站上","w.rv.publishP2":"复制这段文字，自己粘贴到页面里。直接发布到 CMS 之后再做。","w.toast.open":"原型：这里会在新标签页打开你的页面","w.toast.autoOn":"已开启自动检查 · {f}","w.toast.autoOff":"已关闭自动检查","proto.c08b":"C08 · 已放到网站","proto.c09":"C09 · 再次检查结果",
+ "t1.title":"会议页面 · 补充 FAQ","t1.why":"问到「How do I turn meeting notes into action items?」时，ChatGPT 没有提到你","t1.page":"会议页面","t2.title":"定价页 · 和同类工具做对比","t2.why":"问到「Best AI meeting notes app for small teams」时，没有把你拿来比较","t2.page":"定价页","t3.title":"首页 · 写清楚给谁用","t3.why":"问到「Meeting notes software for startups」时，没有提到你","t3.page":"首页","tst.todo":"待查看","tst.open":"改动已备好","tst.adopted":"草稿已保存 · 待粘贴","tst.live":"已放到网站","tst.checked":"已检查 · 引用 +1","tst.declined":"先不改","w.open":"查看","w.tasks.h":"{n} 处可以优化","w.tasks.progress":"已完成 {d}/3","w.c.found2":"第一次检查完成，我找到 3 处可以优化的地方。可以一条一条打开看，每条都附带要加的具体文字。","w.c.welcomeBack":"欢迎回来。3 处优化已完成 {d} 处，剩下的都还在这里。","w.c.declined2":"好的，这个页面保持不动，这条我不会再提。","w.c.addLead2":"网站还没有连接，需要你自己粘贴到{p}：","w.c.s1b":"复制这段文字","w.c.s2b":"粘贴到{p}","w.c.liveMore":"好了。AI 的回答一般要几天才会体现改动，现在立刻检查多半看不出变化。建议先把其他几条也处理完，过几天让我帮你检查：","w.c.liveAll":"所有优化都处理完了。AI 的回答一般要几天才会体现改动，过几天让我帮你检查：","w.c.auto3d":"每 3 天检查一次","w.c.checkAnyway":"还是现在检查","w.c.nextTask":"下一条：{n}. {x}","w.rv.keepAdd2":"保留原文，补充这段","tour.open":"产品导览","tour.skip":"跳过","tour.next":"下一步","tour.done":"知道了","tour.1.t":"你的项目","tour.1.d":"你的网站在这里。目前是一个项目，之后可以添加更多。","tour.2.t":"看板","tour.2.d":"记录每次检查时，ChatGPT 提到你、引用你网站的情况。","tour.3.t":"优化助手","tour.3.d":"我们在这里讨论怎样让你被 AI 提到更多。每次检查后，建议会以任务的形式出现在这里，你可以一条一条处理。","proto.tour":"产品导览", "d18full":"9 月 18 日 14:20","w.ctl.manual2":"你发起时才检查 · 第 {n} 次检查 · 上次 {d}","w.ov.fixes":"进行中的优化","w.ov.nofixes":"还没有优化项。右侧助手给出建议、你点开之后，会出现在这里。","w.topic.name":"会议页面 · 补充 FAQ","w.nav.topics":"优化项","w.nav.notopics":"还没有优化项","w.c.title":"你的优化助手","w.c.intro":"我们在这里一起看看，怎样让你的网站在 AI 大模型里获得更多曝光。每次检查完，我都会在这里告诉你有哪些可以优化的地方，由你决定是否执行；改完之后也可以告诉我。","w.c.found":"这次检查找到 {n} 处可以优化的地方，先看最值得做的一处：","w.c.seeAll":"查看全部 {n} 处","w.c.opt1":"会议页面：补一段「如何把会议记录变成待办」的 FAQ。","w.c.opt2":"定价页：和同类工具做个对比。","w.c.opt3":"首页：写清楚是给谁用的（小团队）。","w.c.oneAtATime":"我会一次推一条，你处理完一条再出下一条；也可以现在直接问我其中任何一条。", "w.toast.checked":"检查完成", "d18":"9 月 18 日","d19":"9 月 19 日","d21":"9 月 21 日","d25":"9 月 25 日","w.ctl.h":"检查","w.ctl.manual":"你发起时才检查 · 上次 {d}","w.ctl.now":"立即检查","w.ctl.running":"检查中 · {n}/10","w.auto.label":"自动检查","w.auto.off":"关闭","w.auto.next":"下次检查 {d} · 随时可关闭","w.freq.daily":"每天","w.freq.3d":"每 3 天","w.freq.weekly":"每周","w.ov.lastAt":"上次检查 {d}","w.ov.vs":"较 9 月 16 日 +{n}","w.ov.latest.checked":"已再次检查 · 本站被引用 +1","w.ov.latest.same":"已再次检查 · 暂无变化","w.st.live":"已放到网站 · 还没检查","w.st.checked":"已检查 · 引用 +1","w.c.addH":"放到你的网站上","w.c.addLead":"网站还没有连接，需要你自己粘贴：","w.c.s1":"复制这段 FAQ","w.c.copy":"复制","w.c.copied":"已复制","w.c.s2":"粘贴到会议页面","w.c.open":"打开页面 ↗","w.c.s3":"放上去后告诉我","w.c.live":"已经放到网站上了","w.c.liveU":"已经放到网站上了。","w.c.liveA":"好的。想看看有没有效果吗？检查只在你发起时才运行。ChatGPT 可能需要几天才会注意到改动。","w.c.checkNow":"立即检查","w.c.autoOffer":"也可以让我自动定期检查，有变化时告诉你：","w.c.autoOn":"已开启自动检查：{f}。我会检查、对比，并给出下一条建议。随时可以在看板上关闭。","w.c.checking":"正在用同样的 10 个问题询问 ChatGPT · {n}/10","w.c.result":"检查完了。问到「How do I turn meeting notes into action items?」时，ChatGPT 现在会提到你，并引用你的会议页面。整体：品牌被提及 7/10（原来 6），本站被引用 3/10（原来 2）。","w.c.resultNote":"一次检查只是快照，每次的回答会有波动。","w.c.nochange":"用同样的 10 个问题又查了一次，和 9 月 16 日相比没有变化。","w.c.next":"下一条：问到「Best AI meeting notes app for small teams」时，你的定价页没有被拿来比较。","w.c.nextBtn":"看看改动","w.c.nextProto":"（原型）下一条改动会以同样方式出现在这里：先看，再决定采用或跳过。","w.rv.publishH2":"放到你的网站上","w.rv.publishP2":"复制这段文字，自己粘贴到页面里。直接发布到 CMS 之后再做。","w.toast.open":"原型：这里会在新标签页打开你的页面","w.toast.autoOn":"已开启自动检查 · {f}","w.toast.autoOff":"已关闭自动检查","proto.c08b":"C08 · 已放到网站","proto.c09":"C09 · 再次检查结果",
   "d16full":"9 月 16 日 · 09:00","w.nav.overview":"网站概览","w.nav.startsite":"从网站开始聊","w.nav.results":"草稿与成果","w.nav.noresults":"还没有成果","w.nav.more":"更多","w.nav.scope":"网站理解与范围","w.soon":"即将上线","w.more.briefs":"内容简报","w.more.rank":"排名追踪","w.more.audit":"网站体检","w.more.cms":"CMS 发布","w.topic.site":"关于你的网站","w.topic.page":"会议页面","w.topic.siteH":"网站说明","w.topic.siteSub":"从已有的网站背景开始聊。你要求时，助手才会写稿。","w.topic.home":"首页说明","w.topic.orig":"网站原文 · 已留存","w.topic.record":"原文记录 · 保留","w.topic.ans":"查看相关回答与出处","w.topic.ansLab":"原回答 · 示例 #04","w.topic.notm":"未提及 Northstar Notes · 未引用本站","w.topic.ansMeta":"9 月 16 日 09:00 · 同一示例引擎 · 美国 / 英语","w.topic.ansNote":"全部为设计样本，没有真实回答 URL；实际产品须保留完整回答、出处与引用。单次未引用不能作为因果结论。","w.topic.openChange":"展开原文与改动","w.topic.openDraft":"展开已保存的草稿","w.topic.openOrig":"展开保留的原文","w.topic.ctx":"已有网站背景，尚未选择某条观测。","w.ov.h1":"网站曝光","w.ov.lastfull":"上次完整观测","w.m.mentioned":"品牌被提及","w.m.cited":"本站被引用","w.ov.measuring":"第一份观测进行中 · 正在询问 ChatGPT {n}/10","w.ov.details":"查看指标明细","w.ov.pos":"品牌相对位置","w.ov.meta":"9 月 16 日 09:00 · 美国 / 英语 · 同一示例引擎","w.ov.sample":"10 个问题 · 8 个品牌 · 第一份完整样本，暂无可比变化。","w.ov.scopeNote":"只描述这组样本，不是全网排名或流量；原回答与引用可在话题中展开。","w.ov.latest":"最近更新","w.ov.latest.run":"第一份观测进行中","w.ov.latest.done":"第一份观测已完成","w.ov.latest.none":"暂无新观测","w.ov.recent":"最近对话","w.ov.norecent":"还没有对话","w.ov.more":"更多看板","w.st.pending":"有一处改动可看","w.st.pendingSite":"有一处改动可看 · 网站未改动","w.st.adopted":"已保存 · 未发布","w.st.declined":"原文保留","w.st.discussion":"讨论中 · 未备稿","w.res.faq":"会议页面 FAQ","w.res.orig":"会议页面原文","w.see.change":"展开改动","w.see.draft":"查看草稿","w.see.orig":"查看原文","w.cont":"继续对话","w.rv.crumb":"展开改动","w.rv.back":"回到对话","w.rv.notpub":"未发布","w.rv.unchanged":"本次未修改","w.rv.saved":"已留存的网站原文","w.rv.keepAdd":"保留原文，补充 FAQ","w.rv.draft":"已保存的草稿","w.rv.kept":"保留的原文","w.rv.notChanged":"本次未修改。","w.rv.hist":"原文来源与保存记录","w.rv.src":"网站原文","w.rv.srcNote":"原文从会议页面留存；所有人工修改和已保存内容保留。采用时生成新保存记录，不覆盖来源。","w.rv.v.pending":"原文 v1 · 建议基于 v1","w.rv.v.adopted":"网站原文 v1 保留 · 草稿 v2 包含原文与完整问答","w.rv.v.declined":"网站原文 v1 保留 · 建议未应用","w.rv.publishH":"需要放到网站上？","w.rv.publishP":"在这段对话里提出即可；缺少连接时才接 CMS，展示目标页面与改动预览，再单独确认发布。","w.rv.publishSoon":"发布 · 即将上线","w.c.current":"当前：{x}","w.c.suggest":"会议页面的行动项说明可以补一段 FAQ。","w.c.see":"看看改动","w.c.measuring":"正在进行第一份观测，这期间可以随时问我。","w.c.ccH":"会议页面 · 补充 FAQ","w.c.orig":"网站原文","w.c.new":"新增","w.c.use":"采用这段","w.c.notnow":"先不改","w.c.hint":"保存到草稿 · 不发布","w.c.useU":"采用这段。","w.c.notnowU":"先不改。","w.c.savedMsg":"已保存到草稿，网站还没有改动。","w.c.declinedMsg":"好，这次不加 FAQ。原文保持不动。","w.c.pendingLeft":"上次准备的 FAQ 留在原话题里。","w.c.seeDraft":"查看已保存的草稿","w.c.seeOrig":"查看保留的原文","w.c.earlier":"前面的对话","w.c.firstOrig":"最初的网站原文","w.c.prepared":"准备的具体改动：","w.c.discU":"先帮我看看网站的说明是否容易被理解，不要马上写稿。","w.c.discA":"好，先核对现有说明。这一条回答没有引用本站，还不能据此判断原因。","w.c.phStart":"也可以直接说你想做什么…","w.c.phMore":"继续说想改的地方…","w.c.phReturn":"接着上次说…","w.c.chat":"直接聊","w.c.send":"发送","w.c.free":"原型中自由对话即将上线，可以先用上面的按钮继续。","w.toast.soon":"即将上线","w.toast.done":"第一份观测已完成","a.skip":"不等了，先聊","c.skip":"稍后完善，先聊","s.skip":"先聊，稍后设置","auth.workspace.t":"创建你的工作区","auth.workspace.s":"网站、观测和对话都保存在一起。免费，不需要信用卡。","proto.c02":"C02 分析与等待","proto.c03":"C03 确认网站理解","proto.c04":"C04 建议观察范围","proto.auth":"创建工作区","proto.c05":"C05 网站工作页","proto.c06":"C06 在对话里拍板","proto.c06b":"C06 · 已采用","proto.c06c":"C06 · 先不改","proto.c06d":"C06 · 只讨论不备稿","proto.c07":"C07 展开原文与改动","proto.c07b":"C07 · 已保存草稿","proto.c08":"C08 回访接续",
   "dg.step1":"你的网站","dg.step2":"你的业务","dg.step3":"问题","back":"上一步",
  "a.kicker":"正在了解你的网站","a.sub":"先读取你的网站，再准备和你业务相关的问题。","a.r1":"读取公开页面","a.r1d":"已整理 3 个页面","a.r2":"理解业务与主要客户","a.r3":"准备要问的问题","a.r3d":"10 个问题","a.working":"正在处理","a.waiting":"尚未开始","a.cont":"查看网站理解",
@@ -1316,7 +1346,7 @@ function closeDrawer(){ S.drawer = null; $("drawer").classList.remove("on"); $("
 async function say(key, vars){ var ty = push({type:"typing"}); await sleep(650); S.items.splice(S.items.indexOf(ty),1); push({type:"ai", key:key, vars:vars}); }
 
 function show(view){
-  S.view = view;
+  S.view = view; if(view!=="ws" && $("tour")) $("tour").hidden = true;
   $("landing").hidden = view!=="landing"; $("app").hidden = view!=="app"; $("diag").hidden = view!=="diag"; $("ws").hidden = view!=="ws";
   document.body.classList.toggle("in-app", view==="app"||view==="ws"); document.body.classList.toggle("ws-mode", view==="ws"); document.body.classList.toggle("inner", view==="ws"||view==="diag");
   if(view==="ws"||view==="diag"){ var pcv = $("dg-halftone"), host = $(view); if(pcv.parentNode!==host) host.insertBefore(pcv, host.firstChild); }
@@ -1421,18 +1451,35 @@ function base(){ resetApp(); S.fast = true; S.view = "app"; S.stepsDone = 4; S.a
   S.metrics = {m:6,c:2}; push({type:"ai", key:"msg.welcome"}); S.fs = "proposed"; push({type:"finding"}); }
 var LOGO_IMG = (document.querySelector(".logo-mark")||{}).outerHTML||"";
 /* ------------------------------------------------------------------ workspace: conversation + dashboard */
-var WS_CUR = "Northstar Notes helps teams record meetings and organize notes.";
-var WS_Q = "How do I turn meeting notes into action items?";
-var WS_A = "After each meeting, list every to-do and check its owner and due date, so the team can keep following up.";
-var WS_QUOTE = "“When choosing a tool, look at whether it can pick out owners, deadlines and follow-ups from your meeting notes.”";
-function wsFresh(){ return {page:"overview", stage:"none", returned:false, measuring:false, asked:10, discussion:false,
-  open:{details:false, ans:false, hist:false, draft:false, earlier:false, all:false}, extra:[],
-  live:false, copied:false, checking:false, checked:false, same:false, last:"d16", auto:{on:false, freq:"weekly"}, autoMsg:false}; }
+/* ------------------------------------------------------------------ workspace: tasks + dashboard + tour */
+var TASKS = [
+  {page:"northstar-notes.example/meetings", cur:"Northstar Notes helps teams record meetings and organize notes.",
+   addQ:"How do I turn meeting notes into action items?", addA:"After each meeting, list every to-do and check its owner and due date, so the team can keep following up.",
+   q:"How do I turn meeting notes into action items?", quote:"“When choosing a tool, look at whether it can pick out owners, deadlines and follow-ups from your meeting notes.”"},
+  {page:"northstar-notes.example/pricing", cur:"Simple pricing for teams of every size. Start free and upgrade as you grow.",
+   addQ:"How is Northstar Notes different?", addA:"Unlike general note apps, Northstar Notes turns every meeting into a list of owners and due dates. Teams moving from Atlas Notes or Minute Flow can keep their templates.",
+   q:"Best AI meeting notes app for small teams", quote:"“For small teams, Atlas Notes and Echo Notes are popular picks; Minute Flow suits teams that rely on templates.”"},
+  {page:"northstar-notes.example", cur:"Meeting notes, organized.",
+   addQ:"", addA:"AI meeting notes for small teams of 2–20 people. Northstar Notes records the call, writes the summary and lists every follow-up.",
+   q:"Meeting notes software for startups", quote:"“Startups often pick tools built for small teams, such as Echo Notes or Tally Minutes.”"}
+];
+var WS_CUR = TASKS[0].cur, WS_Q = TASKS[0].addQ, WS_A = TASKS[0].addA;
+function wsFresh(){ return {page:"overview", cur:-1, returned:false, measuring:false, asked:10, discussion:false, firstVisit:false, tour:-1,
+  tasks:[0,1,2].map(function(){ return {st:"todo", copied:false, live:false}; }),
+  open:{details:false, ans:false, hist:false, draft:false, earlier:false}, extra:[],
+  checking:false, checked:false, same:false, last:"d16", auto:{on:false, freq:"3d"}, autoMsg:false}; }
 var FREQ_NEXT = {daily:"d19", "3d":"d21", weekly:"d25"};
 function freqLabel(f){ return t("w.freq."+f); }
-function hasTopic(){ return S.ws.stage!=="none" || S.ws.discussion; }
-function wsDraftName(){ return S.ws.stage==="declined" ? t("w.res.orig") : t("w.res.faq"); }
-function wsDraftStatus(){ var W = S.ws; if(W.stage==="adopted" && W.checked) return t("w.st.checked"); if(W.stage==="adopted" && W.live) return t("w.st.live"); return {pending:t("w.st.pending"), adopted:t("w.st.adopted"), declined:t("w.st.declined")}[W.stage]||""; }
+function curTask(){ return S.ws.cur>=0 ? S.ws.tasks[S.ws.cur] : null; }
+function hasTopic(){ return !S.ws.measuring; }
+function taskStatus(i){ var k = S.ws.tasks[i]; if(k.st==="adopted"){ if(k.live && S.ws.checked && i===0) return "checked"; return k.live ? "live" : "adopted"; } return k.st; }
+function taskDot(i){ return {todo:"hot", open:"hot", adopted:"hot", live:"ok", checked:"ok", declined:""}[taskStatus(i)]; }
+function tasksDone(){ return S.ws.tasks.filter(function(k){ return k.st==="declined" || (k.st==="adopted" && k.live); }).length; }
+function nextUndone(from){ for(var j=1;j<=3;j++){ var i=(from+j)%3, k=S.ws.tasks[i]; if(k.st==="todo"||k.st==="open") return i; } return -1; }
+function tog(key, label){ return '<button class="ws-toggle'+(S.ws.open[key]?' open':'')+'" data-act="ws-open" data-k="'+key+'" aria-expanded="'+S.ws.open[key]+'">'+label+'</button>'; }
+function linkBtn(label, a, extra){ return '<button class="link" data-act="'+a+'"'+(extra||'')+'>'+label+'</button>'; }
+function addBlock(T){ return '<div class="ws-add-block">'+(T.addQ?'<b>'+T.addQ+'</b>':'')+T.addA+'</div>'; }
+
 function wsControls(){
   var W = S.ws, n = W.last==="d16" ? 1 : 2;
   var h = '<div class="ws-ctl"><div class="ws-ctl-row"><div class="l"><b>'+t("w.ctl.h")+'</b><small>'+t("w.ctl.manual2",{n:n, d:t(W.last==="d16"?"d16full":"d18full")})+'</small></div>';
@@ -1441,27 +1488,20 @@ function wsControls(){
   if(W.auto.on){ h += '<div class="seg" role="radiogroup">'+["daily","3d","weekly"].map(function(f){ return '<button class="'+(W.auto.freq===f?'on':'')+'" data-act="ws-auto-freq" data-f="'+f+'" role="radio" aria-checked="'+(W.auto.freq===f)+'">'+freqLabel(f)+'</button>'; }).join("")+'</div><small class="muted">'+t("w.auto.next",{d:t(FREQ_NEXT[W.auto.freq])})+'</small>'; }
   return h+'</div></div>';
 }
-function tog(key, label){ return '<button class="ws-toggle'+(S.ws.open[key]?' open':'')+'" data-act="ws-open" data-k="'+key+'" aria-expanded="'+S.ws.open[key]+'">'+label+'</button>'; }
-function linkBtn(label, a, extra){ return '<button class="link" data-act="'+a+'"'+(extra||'')+'>'+label+'</button>'; }
 
 function wsSide(){
   var W = S.ws, h = '';
   h += '<div class="logo">'+LOGO_IMG+'opcmaster</div>';
-  h += '<button class="site-switch" type="button" data-act="ws-soon"><span class="site-fav">N</span><span><b>'+esc(S.undBrand)+'</b><small>'+esc(S.domain)+'</small></span></button>';
+  h += '<button class="site-switch" id="tour-project" type="button" data-act="ws-soon"><span class="site-fav">N</span><span><b>'+esc(S.undBrand)+'</b><small>'+esc(S.domain)+'</small></span></button>';
   h += '<div class="ws-group"><button class="ws-item'+(W.page==="overview"?' on':'')+'" data-act="ws-go" data-p="overview">'+t("w.nav.overview")+'</button></div>';
-  h += '<div class="ws-group"><div class="ws-gh">'+t("w.nav.topics")+'</div>';
-  if(hasTopic()) h += '<button class="ws-item'+(W.page!=="overview"?' on':'')+'" data-act="ws-go" data-p="topic">'+t(W.discussion&&W.stage==="none"?"w.topic.site":"w.topic.name")+'</button>';
+  h += '<div class="ws-group"><div class="ws-gh">'+t("w.nav.topics")+(hasTopic()?'<span>'+tasksDone()+'/3</span>':'')+'</div>';
+  if(hasTopic()) [0,1,2].forEach(function(i){ h += '<button class="ws-item'+(W.cur===i&&W.page!=="overview"?' on':'')+'" data-act="ws-task" data-i="'+i+'">'+t("t"+(i+1)+".title")+'<small><i class="'+taskDot(i)+'"></i>'+t("tst."+taskStatus(i))+'</small></button>'; });
   else h += '<div class="ws-empty">'+t("w.nav.notopics")+'</div>';
   h += '<button class="ws-add" data-act="ws-discuss">+ '+t("w.nav.startsite")+'</button></div>';
-  h += '<div class="ws-group"><div class="ws-gh">'+t("w.nav.results")+'</div>';
-  if(W.stage!=="none"){ var dot = W.stage==="pending"?"hot":(W.stage==="adopted"?"ok":"");
-    h += '<button class="ws-item'+(W.page==="review"?' on':'')+'" data-act="ws-go" data-p="review">'+wsDraftName()+'<small><i class="'+dot+'"></i>'+wsDraftStatus()+'</small></button>'; }
-  else h += '<div class="ws-empty">'+t("w.nav.noresults")+'</div>';
-  h += '</div>';
   h += '<div class="ws-group"><div class="ws-gh">'+t("w.nav.more")+'</div>';
   ["w.more.briefs","w.more.rank","w.more.audit","w.more.cms"].forEach(function(k){ h += '<button class="ws-item row" data-act="ws-soon"><span>'+t(k)+'</span><span class="soon">'+t("w.soon")+'</span></button>'; });
   h += '</div>';
-  h += '<div class="ws-foot"><button data-act="ws-soon">'+t("w.nav.scope")+'</button><button data-act="lang">'+t("lang.name")+'</button>';
+  h += '<div class="ws-foot"><button data-act="ws-tour">'+t("tour.open")+'</button><button data-act="ws-soon">'+t("w.nav.scope")+'</button><button data-act="lang">'+t("lang.name")+'</button>';
   if(S.user) h += '<button data-act="ws-soon"><span class="av-s">'+esc(S.user.email.charAt(0).toUpperCase())+'</span><span>'+esc(S.user.email)+'</span></button>';
   h += '<button data-act="home">'+t("side.back")+'</button></div>';
   return h;
@@ -1471,111 +1511,134 @@ function wsOverview(){
   var W = S.ws, h = '<div class="ws-crumb">'+t("w.nav.overview")+'</div><h1 class="ws-h1">'+t("w.ov.h1")+'</h1>';
   h += wsControls();
   h += '<div class="ws-tiles">';
-  var busy = W.measuring || W.checking;
-  [["w.m.mentioned",W.checked?7:6,false],["w.m.cited",W.checked?3:2,!W.returned]].forEach(function(m,i){
-    h += '<div class="ws-tile'+(m[2]&&!busy?' focus':'')+'"><label>'+t(m[0])+'</label>'+(busy?'<div class="skel"></div>':'<div class="num">'+m[1]+'<span> / 10</span></div>'+(W.checked?'<span class="delta">'+t("w.ov.vs",{n:1})+'</span>':''))+'</div>'; });
+  var busy = W.measuring || W.checking, up = W.checked;
+  [["w.m.mentioned",up?7:6,false],["w.m.cited",up?3:2,!W.returned]].forEach(function(m){
+    h += '<div class="ws-tile'+(m[2]&&!busy?' focus':'')+'"><label>'+t(m[0])+'</label>'+(busy?'<div class="skel"></div>':'<div class="num">'+m[1]+'<span> / 10</span></div>'+(up?'<span class="delta">'+t("w.ov.vs",{n:1})+'</span>':''))+'</div>'; });
   h += '</div>';
   if(W.measuring) h += '<p class="ws-sub">'+t("w.ov.measuring",{n:W.asked})+'</p>';
   else {
     h += tog("details", t("w.ov.details"));
     if(W.open.details) h += '<div class="ws-box"><p>'+t("w.ov.pos")+' <b class="mono">#3 / 8</b></p><p class="muted">'+t("w.ov.meta")+'</p><p class="muted">'+t("w.ov.sample")+'</p><p class="muted small">'+t("w.ov.scopeNote")+'</p></div>';
   }
-  h += '<hr class="ws-hr">';
-  h += '<div class="ws-sec"><h3>'+t("w.ov.fixes")+'</h3>';
+  h += '<hr class="ws-hr"><div class="ws-sec"><h3>'+t("w.ov.fixes")+(hasTopic()?' · '+t("w.tasks.progress",{d:tasksDone()}):'')+'</h3>';
   if(!hasTopic()) h += '<p class="muted">'+t("w.ov.nofixes")+'</p></div>';
-  else {
-    var st = W.stage==="none" ? t("w.st.discussion") : (W.stage==="pending"?t("w.st.pendingSite"):wsDraftStatus());
-    var see = {pending:"w.see.change", adopted:"w.see.draft", declined:"w.see.orig"}[W.stage];
-    h += '</div><div class="ws-recent"><div class="t"><b>'+t(W.stage==="none"?"w.topic.site":"w.topic.name")+'</b><small>'+st+'</small></div>'+
-      '<button class="btn btn-primary" data-act="ws-go" data-p="topic">'+t("w.cont")+' →</button>'+(see?'<button class="btn btn-quiet" data-act="ws-go" data-p="review">'+t(see)+'</button>':'')+'</div>';
-  }
+  else { h += '</div><div class="ws-tasklist">'+[0,1,2].map(function(i){ var s = taskStatus(i);
+      return '<div class="ws-trow"><span class="tn'+(s==="live"||s==="checked"||s==="declined"?' done':'')+'">'+(s==="live"||s==="checked"?I.check:(i+1))+'</span><div class="t"><b>'+t("t"+(i+1)+".title")+'</b><small>'+t("t"+(i+1)+".why")+'</small></div><span class="pill">'+t("tst."+s)+'</span><button class="btn btn-line" data-act="ws-task" data-i="'+i+'">'+t("w.open")+'</button></div>'; }).join("")+'</div>'; }
   h += '<div class="ws-sec"><h3>'+t("w.ov.more")+'</h3></div><div class="ws-soonrow">'+
     ["w.more.rank","w.more.audit","w.more.briefs"].map(function(k){ return '<div><b>'+t(k)+'</b><span class="soon">'+t("w.soon")+'</span></div>'; }).join("")+'</div>';
   return h;
 }
 
 function wsTopic(){
-  var W = S.ws, disc = W.discussion && W.stage==="none";
-  var h = '<div class="ws-crumb">'+t("w.nav.topics")+' / '+t(disc?"w.topic.site":"w.topic.name")+'</div><h1 class="ws-h1">'+t(disc?"w.topic.siteH":"w.topic.page")+'</h1>';
-  if(disc){ h += '<p class="ws-sub">'+t("w.topic.siteSub")+'</p><div class="ws-box"><span class="ws-lab">'+t("w.topic.home")+'</span><p>'+WS_CUR+'</p></div>'; return h; }
-  h += '<div class="ws-url">northstar-notes.example/meetings</div>';
-  h += '<div class="ws-box"><span class="ws-lab">'+t(W.stage==="pending"?"w.topic.orig":"w.topic.record")+'</span><p>'+WS_CUR+'</p></div>';
+  var W = S.ws;
+  if(W.cur<0){ return '<div class="ws-crumb">'+t("w.nav.topics")+' / '+t("w.topic.site")+'</div><h1 class="ws-h1">'+t("w.topic.siteH")+'</h1><p class="ws-sub">'+t("w.topic.siteSub")+'</p><div class="ws-box"><span class="ws-lab">'+t("w.topic.home")+'</span><p>'+TASKS[2].cur+'</p></div>'; }
+  var T = TASKS[W.cur], k = curTask(), n = W.cur+1;
+  var h = '<div class="ws-crumb">'+t("w.nav.topics")+' / '+t("t"+n+".title")+'</div><h1 class="ws-h1">'+t("t"+n+".page")+'</h1>';
+  h += '<div class="ws-url">'+T.page+'</div><p class="ws-sub">'+t("t"+n+".why")+'</p>';
+  h += '<div class="ws-box"><span class="ws-lab">'+t(k.st==="open"||k.st==="todo"?"w.topic.orig":"w.topic.record")+'</span><p>'+T.cur+'</p></div>';
   h += tog("ans", t("w.topic.ans"));
-  if(W.open.ans) h += '<div class="ws-box"><span class="ws-lab">'+t("w.topic.ansLab")+'</span><p><b>'+WS_Q+'</b></p><p class="ws-quote">'+WS_QUOTE+'</p><p><span class="pill">'+t("w.topic.notm")+'</span></p><p class="muted small">'+t("w.topic.ansMeta")+'</p><p class="muted small">'+t("w.topic.ansNote")+'</p></div>';
-  var lk = {pending:"w.topic.openChange", adopted:"w.topic.openDraft", declined:"w.topic.openOrig"}[W.stage];
+  if(W.open.ans) h += '<div class="ws-box"><span class="ws-lab">'+t("w.topic.ansLab")+'</span><p><b>'+T.q+'</b></p><p class="ws-quote">'+T.quote+'</p><p><span class="pill">'+t("w.topic.notm")+'</span></p><p class="muted small">'+t("w.topic.ansMeta")+'</p><p class="muted small">'+t("w.topic.ansNote")+'</p></div>';
+  var lk = {open:"w.topic.openChange", adopted:"w.topic.openDraft", declined:"w.topic.openOrig"}[k.st];
   if(lk) h += '<div>'+linkBtn(t(lk)+' ↗',"ws-go",' data-p="review"')+'</div>';
-  h += '<p class="ws-sub">'+t("w.topic.ctx")+'</p>';
   return h;
 }
 
 function wsReview(){
-  var W = S.ws, h = '<div class="ws-crumb">'+t("w.topic.name")+' / '+t("w.rv.crumb")+'</div><h1 class="ws-h1">'+wsDraftName()+'</h1>';
-  h += '<div class="ws-status">'+linkBtn('← '+t("w.rv.back"),"ws-go",' data-p="topic"')+'<span class="pill">'+t(W.stage==="declined"?"w.rv.unchanged":"w.rv.notpub")+'</span></div>';
-  if(W.stage==="pending"){
-    h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.saved")+'</span><p>'+WS_CUR+'</p></div>';
-    h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.keepAdd")+'</span><p class="muted">'+WS_CUR+'</p><div class="ws-add-block" style="margin-top:10px"><b>'+WS_Q+'</b>'+WS_A+'</div></div>';
-  } else if(W.stage==="adopted"){
-    h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.draft")+'</span><p>'+WS_CUR+'</p><div class="ws-add-block" style="margin-top:10px"><b>'+WS_Q+'</b>'+WS_A+'</div></div>';
-  } else {
-    h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.kept")+'</span><p>'+WS_CUR+'</p><p class="muted small">'+t("w.rv.notChanged")+'</p></div>';
-  }
+  var W = S.ws; if(W.cur<0) W.cur = 0;
+  var T = TASKS[W.cur], k = curTask(), n = W.cur+1;
+  var h = '<div class="ws-crumb">'+t("t"+n+".title")+' / '+t("w.rv.crumb")+'</div><h1 class="ws-h1">'+t("t"+n+".title")+'</h1>';
+  h += '<div class="ws-status">'+linkBtn('← '+t("w.rv.back"),"ws-go",' data-p="topic"')+'<span class="pill">'+t(k.st==="declined"?"w.rv.unchanged":(k.live?"tst.live":"w.rv.notpub"))+'</span></div>';
+  if(k.st==="adopted") h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.draft")+'</span><p>'+T.cur+'</p><div style="margin-top:10px">'+addBlock(T)+'</div></div>';
+  else if(k.st==="declined") h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.kept")+'</span><p>'+T.cur+'</p><p class="muted small">'+t("w.rv.notChanged")+'</p></div>';
+  else { h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.saved")+'</span><p>'+T.cur+'</p></div><div class="ws-box"><span class="ws-lab">'+t("w.rv.keepAdd2")+'</span><p class="muted">'+T.cur+'</p><div style="margin-top:10px">'+addBlock(T)+'</div></div>'; }
   h += tog("hist", t("w.rv.hist"));
-  if(W.open.hist) h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.src")+' · northstar-notes.example/meetings</span><p>'+WS_CUR+'</p><p class="muted small">'+t("w.rv.srcNote")+'</p><p class="mono small">'+t({pending:"w.rv.v.pending",adopted:"w.rv.v.adopted",declined:"w.rv.v.declined"}[W.stage])+'</p></div>';
+  if(W.open.hist) h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.src")+' · '+T.page+'</span><p>'+T.cur+'</p><p class="muted small">'+t("w.rv.srcNote")+'</p><p class="mono small">'+t({open:"w.rv.v.pending",todo:"w.rv.v.pending",adopted:"w.rv.v.adopted",declined:"w.rv.v.declined"}[k.st])+'</p></div>';
   h += '<div class="ws-callout"><div><b>'+t("w.rv.publishH2")+'</b><p>'+t("w.rv.publishP2")+'</p></div><span class="soon">'+t("w.rv.publishSoon")+'</span></div>';
   return h;
 }
 
+function wsTaskCard(){
+  var W = S.ws;
+  var rows = [0,1,2].map(function(i){ var s = taskStatus(i), done = s==="live"||s==="checked"||s==="declined";
+    return '<button class="tk'+(W.cur===i?' on':'')+(done?' done':'')+'" data-act="ws-task" data-i="'+i+'"><span class="tn">'+(s==="live"||s==="checked"?I.check:(i+1))+'</span><span class="tt"><b>'+t("t"+(i+1)+".title")+'</b><small>'+t("tst."+s)+'</small></span></button>'; }).join("");
+  return '<div class="cc tasks"><div class="cc-h tasks-h"><span>'+t("w.tasks.h",{n:3})+'</span><span class="muted">'+t("w.tasks.progress",{d:tasksDone()})+'</span></div><div class="tk-list">'+rows+'</div></div>';
+}
+
 function wsChatBody(){
-  var W = S.ws, h = '<div class="cb-intro">'+t("w.c.intro")+'</div>', who = '<span class="who">OPCMASTER</span>';
+  var W = S.ws, h = '', who = '<span class="who">OPCMASTER</span>';
   function a(inner){ h += '<div class="cb-a">'+who+inner+'</div>'; }
   function u(text){ h += '<div class="cb-u">'+esc(text)+'</div>'; }
-  if(W.discussion && W.stage==="none"){ u(t("w.c.discU")); a('<p>'+t("w.c.discA")+'</p>'); }
-  else if(W.stage==="none"){
-    if(W.measuring) a('<p>'+t("w.c.measuring")+'</p>');
-    else { a('<p>'+t("w.c.found",{n:3})+'</p><p><b>1.</b> '+t("w.c.suggest")+'</p><button class="btn btn-primary" data-act="ws-see">'+t("w.c.see")+' →</button>');
-      h += '<div class="cb-fold">'+tog("all", t("w.c.seeAll",{n:3}))+(W.open.all?'<div class="ws-box"><p><b>1.</b> '+t("w.c.opt1")+'</p><p><b>2.</b> '+t("w.c.opt2")+'</p><p><b>3.</b> '+t("w.c.opt3")+'</p><p class="muted small">'+t("w.c.oneAtATime")+'</p></div>':'')+'</div>'; }
-  }
-  else if(W.stage==="pending"){
-    a('<div class="cc"><div class="cc-h">'+t("w.c.ccH")+'</div><div class="cc-b"><div><span class="ws-lab">'+t("w.c.orig")+'</span><div class="cc-cur">'+WS_CUR+'</div></div>'+
-      '<div class="ws-add-block"><span class="ws-lab" style="color:var(--accent-ink)">'+t("w.c.new")+'</span><b>'+WS_Q+'</b>'+WS_A+'</div></div>'+
-      '<div class="cc-f"><button class="btn btn-primary" data-act="ws-adopt">'+t("w.c.use")+'</button><button class="btn btn-quiet" data-act="ws-decline">'+t("w.c.notnow")+'</button><small>'+t("w.c.hint")+'</small></div></div>');
-  }
-  else if(W.returned && W.page==="overview"){ a('<p>'+t(W.stage==="adopted"?"w.c.savedMsg":(W.stage==="declined"?"w.c.declinedMsg":"w.c.pendingLeft"))+'</p>'); }
+  if(W.firstVisit) h += '<div class="cb-intro">'+t("w.c.intro")+'</div>';
+  if(W.measuring){ a('<p>'+t("w.c.measuring")+'</p>'); }
   else {
-    var ad = W.stage==="adopted";
-    u(t(ad?"w.c.useU":"w.c.notnowU"));
-    a('<p>'+t(ad?"w.c.savedMsg":"w.c.declinedMsg")+'</p>');
-    h += '<div class="cb-fold">'+tog("draft", t(ad?"w.c.seeDraft":"w.c.seeOrig"))+(W.open.draft?'<div class="ws-box"><p>'+WS_CUR+'</p>'+(ad?'<div class="ws-add-block" style="margin-top:8px"><b>'+WS_Q+'</b>'+WS_A+'</div>':'')+'</div>':'')+'</div>';
-    if(ad && !(W.returned && W.page==="overview")){
-      if(!W.live){
-        h += '<div class="cc"><div class="cc-h">'+t("w.c.addH")+'</div><div class="cc-b"><span class="muted small">'+t("w.c.addLead")+'</span><ol class="todo">'+
-          '<li><span class="n'+(W.copied?' ok':'')+'">'+(W.copied?I.check:'1')+'</span><span>'+t("w.c.s1")+'</span><button class="btn btn-line" style="height:30px" data-act="ws-copy">'+t(W.copied?"w.c.copied":"w.c.copy")+'</button></li>'+
-          '<li><span class="n">2</span><span>'+t("w.c.s2")+'</span><button class="btn btn-line" style="height:30px" data-act="ws-open-page">'+t("w.c.open")+'</button></li>'+
-          '<li><span class="n">3</span><span>'+t("w.c.s3")+'</span><button class="btn btn-primary" style="height:30px" data-act="ws-live">'+t("w.c.live")+'</button></li></ol></div></div>';
+    if(W.returned && W.cur<0) a('<p>'+t("w.c.welcomeBack",{d:tasksDone()})+'</p>');
+    else if(W.cur<0 && !W.discussion) a('<p>'+t("w.c.found2",{n:3})+'</p>');
+    h += wsTaskCard();
+    if(W.discussion && W.cur<0){ u(t("w.c.discU")); a('<p>'+t("w.c.discA")+'</p>'); }
+    if(W.cur>=0){
+      var T = TASKS[W.cur], k = curTask(), n = W.cur+1;
+      h += '<div class="cb-div">'+t("t"+n+".title")+'</div>';
+      if(k.st==="todo"||k.st==="open"){
+        a('<p>'+t("t"+n+".why")+'</p><div class="cc"><div class="cc-h">'+t("t"+n+".title")+'</div><div class="cc-b"><div><span class="ws-lab">'+t("w.c.orig")+'</span><div class="cc-cur">'+T.cur+'</div></div>'+
+          '<div class="ws-add-block"><span class="ws-lab" style="color:var(--accent-ink)">'+t("w.c.new")+'</span>'+(T.addQ?'<b>'+T.addQ+'</b>':'')+T.addA+'</div></div>'+
+          '<div class="cc-f"><button class="btn btn-primary" data-act="ws-adopt">'+t("w.c.use")+'</button><button class="btn btn-quiet" data-act="ws-decline">'+t("w.c.notnow")+'</button><small>'+t("w.c.hint")+'</small></div></div>');
+      } else if(k.st==="declined"){
+        u(t("w.c.notnowU")); a('<p>'+t("w.c.declined2")+'</p>');
       } else {
-        u(t("w.c.liveU"));
-        var chk = W.checking||W.checked ? '' : '<button class="btn btn-primary" data-act="ws-check">'+t("w.c.checkNow")+'</button>';
-        var offer = W.auto.on ? '' : '<p class="muted small" style="margin-top:4px">'+t("w.c.autoOffer")+'</p><div class="chips-row">'+["daily","3d","weekly"].map(function(f){ return '<button class="btn btn-line" style="height:30px" data-act="ws-auto-freq" data-f="'+f+'" data-chat="1">'+freqLabel(f)+'</button>'; }).join("")+'</div>';
-        a('<p>'+t("w.c.liveA")+'</p>'+chk+offer);
+        u(t("w.c.useU")); a('<p>'+t("w.c.savedMsg")+'</p>');
+        if(!k.live){
+          h += '<div class="cc"><div class="cc-h">'+t("w.c.addH")+'</div><div class="cc-b"><span class="muted small">'+t("w.c.addLead2",{p:t("t"+n+".page")})+'</span><ol class="todo">'+
+            '<li><span class="n'+(k.copied?' ok':'')+'">'+(k.copied?I.check:'1')+'</span><span>'+t("w.c.s1b")+'</span><button class="btn btn-line" style="height:30px" data-act="ws-copy">'+t(k.copied?"w.c.copied":"w.c.copy")+'</button></li>'+
+            '<li><span class="n">2</span><span>'+t("w.c.s2b",{p:t("t"+n+".page")})+'</span><button class="btn btn-line" style="height:30px" data-act="ws-open-page">'+t("w.c.open")+'</button></li>'+
+            '<li><span class="n">3</span><span>'+t("w.c.s3")+'</span><button class="btn btn-primary" style="height:30px" data-act="ws-live">'+t("w.c.live")+'</button></li></ol></div></div>';
+        } else {
+          u(t("w.c.liveU"));
+          var nx = nextUndone(W.cur);
+          var body = '<p>'+t(nx>=0?"w.c.liveMore":"w.c.liveAll")+'</p>';
+          if(!W.auto.on && !W.checked) body += '<div class="chips-row"><button class="btn btn-primary" style="height:32px" data-act="ws-auto-freq" data-f="3d" data-chat="1">'+t("w.c.auto3d")+'</button><button class="btn btn-line" style="height:32px" data-act="ws-auto-freq" data-f="weekly" data-chat="1">'+freqLabel("weekly")+'</button><button class="btn btn-line" style="height:32px" data-act="ws-auto-freq" data-f="daily" data-chat="1">'+freqLabel("daily")+'</button></div>';
+          if(!W.checking && !W.checked) body += '<button class="link small" data-act="ws-check">'+t("w.c.checkAnyway")+'</button>';
+          a(body);
+        }
       }
+      if((k.st==="declined" || (k.st==="adopted" && k.live))){ var nx2 = nextUndone(W.cur); if(nx2>=0) a('<button class="btn btn-line" data-act="ws-task" data-i="'+nx2+'">'+t("w.c.nextTask",{n:nx2+1, x:t("t"+(nx2+1)+".title")})+' →</button>'); }
     }
-    h += '<div class="cb-fold">'+tog("earlier", t("w.c.earlier"))+(W.open.earlier?'<div class="ws-box"><span class="ws-lab">OPCMASTER · '+t("w.c.firstOrig")+'</span><p>'+WS_CUR+'</p><p>'+t("w.c.suggest")+'</p><p class="muted small">'+t("w.c.prepared")+' '+WS_Q+'</p></div>':'')+'</div>';
   }
   if(W.autoMsg && W.auto.on) a('<p>'+t("w.c.autoOn",{f:freqLabel(W.auto.freq)})+'</p>');
   if(W.checking) a('<p>'+t("w.c.checking",{n:W.asked})+'</p><div class="bar" style="width:100%"><i style="width:'+(W.asked*10)+'%"></i></div>');
-  if(W.checked){ a('<p>'+t("w.c.result")+'</p><div class="cmp" style="width:100%"><div><small>'+t("d16")+'</small><b>'+t("r.beforev")+'</b></div><span class="arr">'+I.arrow+'</span><div class="after"><small>'+t(W.last)+'</small><b>'+t("r.afterv")+'</b></div></div><p class="muted small">'+t("w.c.resultNote")+'</p>');
-    a('<p>'+t("w.c.next")+'</p><button class="btn btn-line" data-act="ws-next">'+t("w.c.nextBtn")+' →</button>'); }
+  if(W.checked){ a('<p>'+t("w.c.result")+'</p><div class="cmp" style="width:100%"><div><small>'+t("d16")+'</small><b>'+t("r.beforev")+'</b></div><span class="arr">'+I.arrow+'</span><div class="after"><small>'+t(W.last)+'</small><b>'+t("r.afterv")+'</b></div></div><p class="muted small">'+t("w.c.resultNote")+'</p>'); }
   W.extra.forEach(function(m){ if(m.u) u(m.u); else a('<p>'+t(m.k)+'</p>'); });
   return h;
 }
 function wsChat(){
-  var W = S.ws, ctx = hasTopic() && (W.page!=="overview" || W.returned) ? t(W.stage==="none"?"w.topic.site":"w.topic.name") : S.undBrand;
-  var ph = W.returned&&W.page==="overview" ? "w.c.phReturn" : (W.stage==="none"&&!W.discussion ? "w.c.phStart" : "w.c.phMore");
-  var btn = W.returned&&W.page==="overview" ? t("w.cont")+" →" : (W.stage==="none"&&!W.discussion ? t("w.c.chat") : t("w.c.send"));
+  var W = S.ws, ctx = W.cur>=0 ? t("t"+(W.cur+1)+".title") : S.undBrand;
+  var ph = W.cur>=0 ? "w.c.phMore" : "w.c.phStart";
   return '<div class="ws-chat-h"><b>'+t("w.c.title")+'</b><small>'+t("w.c.current",{x:esc(ctx)})+'</small></div>'+
     '<div class="ws-chat-b" id="ws-chat-b">'+wsChatBody()+'</div>'+
-    '<div class="ws-chat-f"><form id="ws-form"><label for="ws-input" class="sr">'+t(ph)+'</label><textarea id="ws-input" rows="2" placeholder="'+esc(t(ph))+'"></textarea><div class="row"><button class="btn btn-line" type="submit">'+btn+'</button></div></form></div>';
+    '<div class="ws-chat-f"><form id="ws-form"><label for="ws-input" class="sr">'+t(ph)+'</label><textarea id="ws-input" rows="2" placeholder="'+esc(t(ph))+'"></textarea><div class="row"><button class="btn btn-line" type="submit">'+t(W.cur>=0?"w.c.send":"w.c.chat")+'</button></div></form></div>';
 }
+
+/* ---------- first-visit tour: project → dashboard → assistant */
+var TOUR = [["#tour-project","tour.1"],["#ws-main .ws-in","tour.2"],["#ws-chat","tour.3"]];
+function renderTour(){
+  var el = $("tour"), W = S.ws;
+  if(!W || W.tour<0 || S.view!=="ws"){ el.hidden = true; return; }
+  var step = TOUR[W.tour], target = document.querySelector(step[0]); if(!target){ el.hidden = true; return; }
+  el.hidden = false;
+  var r = target.getBoundingClientRect(), pad = 8, vw = window.innerWidth, vh = window.innerHeight;
+  var hole = {x:Math.max(4,r.left-pad), y:Math.max(4,r.top-pad), w:Math.min(vw-8,r.width+pad*2), h:Math.min(vh-8, r.height+pad*2)};
+  if(W.tour===1) hole.h = Math.min(hole.h, 430);
+  var cw = 320, cx, cy;
+  if(W.tour===0){ cx = hole.x+hole.w+16; cy = hole.y; }
+  else if(W.tour===1){ cx = hole.x+hole.w/2-cw/2; cy = hole.y+hole.h+14; }
+  else { cx = hole.x-cw-16; cy = hole.y+80; }
+  cx = Math.max(12, Math.min(vw-cw-12, cx)); cy = Math.max(12, Math.min(vh-240, cy));
+  var last = W.tour===TOUR.length-1;
+  el.innerHTML = '<div class="tour-hole" style="left:'+hole.x+'px;top:'+hole.y+'px;width:'+hole.w+'px;height:'+hole.h+'px"></div>'+
+    '<div class="tour-card" role="dialog" aria-labelledby="tour-t" style="left:'+cx+'px;top:'+cy+'px;width:'+cw+'px"><small class="mono">'+(W.tour+1)+' / 3</small><b id="tour-t">'+t(step[1]+".t")+'</b><p>'+t(step[1]+".d")+'</p>'+
+    '<div class="tour-a"><button class="btn btn-quiet" data-act="tour-skip">'+t("tour.skip")+'</button><button class="btn btn-primary" data-act="tour-next">'+t(last?"tour.done":"tour.next")+'</button></div></div>';
+}
+window.addEventListener("resize", function(){ if(S.ws && S.ws.tour>=0) renderTour(); });
+
 function renderWS(){
   if(S.view!=="ws" || !S.ws) return;
   var main = S.ws.page==="overview" ? wsOverview() : (S.ws.page==="topic" ? wsTopic() : wsReview());
@@ -1585,10 +1648,12 @@ function renderWS(){
   $("ws-chat").innerHTML = wsChat();
   if(draft) $("ws-input").value = draft;
   var cb = $("ws-chat-b"); if(cb) cb.scrollTop = cb.scrollHeight;
+  renderTour();
 }
 async function enterWS(mode){
   runId++; var id = runId;
-  S.ws = wsFresh(); if(mode==="measuring"){ S.ws.measuring = true; S.ws.asked = 0; }
+  S.ws = wsFresh(); S.ws.firstVisit = true; S.ws.tour = 0;
+  if(mode==="measuring"){ S.ws.measuring = true; S.ws.asked = 0; }
   show("ws"); renderWS();
   if(mode!=="measuring") return;
   try{ for(var n=1;n<=10;n++){ await sleep(450); check(id); S.ws.asked = n; renderWS(); }
@@ -1603,27 +1668,29 @@ async function wsCheck(){
   W.checking = true; W.asked = 0; renderWS();
   try{ for(var n=1;n<=10;n++){ await sleep(260); check(id); W.asked = n; renderWS(); }
     W.checking = false; W.last = "d18";
-    if(W.live){ W.checked = true; } else { W.same = true; W.extra.push({k:"w.c.nochange"}); }
+    if(W.tasks[0].live){ W.checked = true; } else { W.same = true; W.extra.push({k:"w.c.nochange"}); }
     renderWS(); toast(t("w.toast.checked")); }catch(e){ if(e!=="cancel") throw e; }
 }
 function wsJump(k){
   if(!S.user) S.user = {email:"owner@northstar-notes.example"};
-  runId++; S.ws = wsFresh(); var W = S.ws;
-  if(k==="c06"){ W.stage="pending"; W.page="topic"; }
-  if(k==="c06b"){ W.stage="adopted"; W.page="topic"; }
-  if(k==="c06c"){ W.stage="declined"; W.page="topic"; }
+  runId++; S.ws = wsFresh(); var W = S.ws, T0 = W.tasks[0];
+  if(k==="tour"){ W.firstVisit = true; W.tour = 0; }
+  if(k==="c06"){ T0.st="open"; W.cur=0; W.page="topic"; }
+  if(k==="c06b"){ T0.st="adopted"; W.cur=0; W.page="topic"; }
+  if(k==="c06c"){ T0.st="declined"; W.cur=0; W.page="topic"; }
   if(k==="c06d"){ W.discussion=true; W.page="topic"; }
-  if(k==="c07"){ W.stage="pending"; W.page="review"; }
-  if(k==="c07b"){ W.stage="adopted"; W.page="review"; }
-  if(k==="c08"){ W.stage="adopted"; W.returned=true; }
-  if(k==="c08b"){ W.stage="adopted"; W.page="topic"; W.live=true; W.copied=true; }
-  if(k==="c09"){ W.stage="adopted"; W.live=true; W.copied=true; W.checked=true; W.last="d18"; }
+  if(k==="c07"){ T0.st="open"; W.cur=0; W.page="review"; }
+  if(k==="c07b"){ T0.st="adopted"; W.cur=0; W.page="review"; }
+  if(k==="c08"){ T0.st="adopted"; W.returned=true; }
+  if(k==="c08b"){ T0.st="adopted"; T0.live=true; T0.copied=true; W.cur=0; W.page="topic"; }
+  if(k==="c09"){ T0.st="adopted"; T0.live=true; T0.copied=true; W.tasks[1].st="declined"; W.checked=true; W.last="d18"; W.auto.on=true; }
   show("ws"); renderWS();
 }
 
 function jump(k){
   $("proto-menu").hidden = true; $("proto-btn").setAttribute("aria-expanded","false");
   if(k==="landing"){ S.user = null; resetApp(); show("landing"); return; }
+  if(k==="tour"){ wsJump("tour"); return; }
   if(/^c0/.test(k)){ if(k==="c05"){ if(!S.user) S.user = {email:"owner@northstar-notes.example"}; enterWS("measured"); } else wsJump(k); return; }
   if(k==="auth"){ S.user = null; resetApp(); S.diag = {phase:"scope"}; S.stepsDone = 3; show("diag"); renderDiag(); finishOnboarding("measured"); return; }
   if(k==="report"||k==="signup"){ if(k==="signup") S.user = null; resetApp(); S.diag = {phase:"report"}; S.metrics = {m:6,c:2}; show("diag"); renderDiag(); if(k==="signup"){ S.pending = "report"; openAuth("report"); } return; }
@@ -1664,18 +1731,22 @@ async function act(name, el){
     case "dg-skip": runId++; finishOnboarding("measuring"); break;
     case "ws-go": S.ws.page = el.getAttribute("data-p"); renderWS(); $("ws-main").scrollTop = 0; break;
     case "ws-open": var k = el.getAttribute("data-k"); S.ws.open[k] = !S.ws.open[k]; renderWS(); break;
-    case "ws-see": S.ws.stage = "pending"; S.ws.page = "topic"; renderWS(); break;
-    case "ws-adopt": S.ws.stage = "adopted"; S.ws.open.draft = false; renderWS(); break;
-    case "ws-decline": S.ws.stage = "declined"; S.ws.open.draft = false; renderWS(); break;
-    case "ws-discuss": if(S.ws.stage==="none") S.ws.discussion = true; S.ws.page = "topic"; renderWS(); break;
+    case "ws-task": var ti = +el.getAttribute("data-i"); S.ws.cur = ti; if(S.ws.tasks[ti].st==="todo") S.ws.tasks[ti].st = "open"; S.ws.page = "topic"; S.ws.firstVisit = false; S.ws.discussion = false; S.ws.open.ans = false; renderWS(); $("ws-main").scrollTop = 0; break;
+    case "ws-see": S.ws.cur = 0; S.ws.tasks[0].st = "open"; S.ws.page = "topic"; renderWS(); break;
+    case "ws-adopt": curTask().st = "adopted"; renderWS(); break;
+    case "ws-decline": curTask().st = "declined"; renderWS(); break;
+    case "ws-discuss": S.ws.discussion = true; S.ws.cur = -1; S.ws.page = "topic"; S.ws.firstVisit = false; renderWS(); break;
     case "ws-soon": toast(t("w.toast.soon")); break;
-    case "ws-copy": try{ await navigator.clipboard.writeText(WS_Q+"\n"+WS_A); }catch(e){} S.ws.copied = true; renderWS(); toast(t("toast.copied")); break;
+    case "ws-copy": var TT = TASKS[S.ws.cur]; try{ await navigator.clipboard.writeText((TT.addQ?TT.addQ+"\n":"")+TT.addA); }catch(e){} curTask().copied = true; renderWS(); toast(t("toast.copied")); break;
     case "ws-open-page": toast(t("w.toast.open")); break;
-    case "ws-live": S.ws.live = true; S.ws.copied = true; renderWS(); break;
+    case "ws-live": curTask().live = true; curTask().copied = true; renderWS(); break;
     case "ws-check": wsCheck(); break;
     case "ws-auto-toggle": S.ws.auto.on = !S.ws.auto.on; if(!S.ws.auto.on) S.ws.autoMsg = false; renderWS(); toast(S.ws.auto.on ? t("w.toast.autoOn",{f:freqLabel(S.ws.auto.freq)}) : t("w.toast.autoOff")); break;
     case "ws-auto-freq": S.ws.auto.freq = el.getAttribute("data-f"); S.ws.auto.on = true; if(el.getAttribute("data-chat")) S.ws.autoMsg = true; renderWS(); toast(t("w.toast.autoOn",{f:freqLabel(S.ws.auto.freq)})); break;
     case "ws-next": S.ws.extra.push({k:"w.c.nextProto"}); renderWS(); break;
+    case "ws-tour": S.ws.tour = 0; renderTour(); break;
+    case "tour-next": S.ws.tour++; if(S.ws.tour>=TOUR.length) S.ws.tour = -1; renderTour(); break;
+    case "tour-skip": S.ws.tour = -1; renderTour(); break;
     case "rp-cta": if(S.user) enterApp(); else { S.pending = "report"; openAuth("report"); } break;
     case "account": if(!S.user) openAuth("signup"); else toast(t("toast.signed",{email:S.user.email})); break;
     case "auth-close": closeAuth(); break;
