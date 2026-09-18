@@ -729,8 +729,8 @@ body:not(.in-app):not(.inner){background:#0F0F0F}
 .ask-go{color:#111}
 
 /* faint star floor behind the workspace dashboard (side + chat panels stay solid) */
-body.ws-mode #dg-halftone{position:absolute;left:240px;right:384px;width:auto;height:58%;opacity:.75}
-@media (max-width:1180px){body.ws-mode #dg-halftone{left:220px;right:340px}}
+body.ws-mode #dg-halftone{position:absolute;left:240px;right:auto;width:calc(100% - 240px - 384px);height:58%;opacity:.75}
+@media (max-width:1180px){body.ws-mode #dg-halftone{left:220px;width:calc(100% - 220px - 340px)}}
 @media (max-width:900px){body.ws-mode #dg-halftone{display:none}}
 
 /* workspace: user-triggered checks + optional auto-check */
