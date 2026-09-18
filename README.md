@@ -23,6 +23,6 @@ Use the yellow **Prototype** button to jump to any screen (C02–C08). The langu
 
 ## Notes
 
-- All data is example data (Northstar Notes is a fictional site). Nothing is sent anywhere; sign-up and publishing are simulated.
+- The demo uses answerai.pro as the example site. Its page copy is taken from the public site, but every check result, ChatGPT answer and suggestion is **made-up example data, not a real measurement**. Nothing is sent anywhere; sign-up is simulated.
 - Single self-contained `index.html` (fonts from Google Fonts). `opcmaster-loop.html` is the same file under its working name.
 - MVP scope: publishing is manual (copy → paste → "It's on my site"); no CMS connection yet.
