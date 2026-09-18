@@ -334,11 +334,11 @@ body:not(.in-app){background:#0B0C11}
 body.in-app .proto{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
 .proto-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:#FFE9A8;color:#3B2F00;font-weight:500;box-shadow:0 6px 18px -8px rgba(0,0,0,.35)}
 .proto-btn i{width:7px;height:7px;border-radius:50%;background:#B7791F}
-.proto-menu{position:absolute;right:0;bottom:44px;width:250px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:6px}
+.proto-menu{position:absolute;right:0;bottom:44px;width:260px;max-height:70vh;overflow-y:auto;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:6px}
 .proto-menu p{margin:6px 10px 6px;font-size:11px;color:var(--ink-3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
 .proto-menu button{display:flex;width:100%;text-align:left;padding:8px 10px;border-radius:8px;gap:10px}
 .proto-menu button:hover{background:var(--surface-2)}
-.proto-menu button span{font-family:var(--mono);font-size:11px;color:var(--ink-3);width:18px}
+.proto-menu button span{font-family:var(--mono);font-size:11px;color:var(--ink-3);width:30px;flex:none}
 .proto-menu hr{border:0;border-top:1px solid var(--line);margin:4px 0}
 
 @media (max-width:820px){
@@ -566,6 +566,109 @@ body.in-app .proto{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
 /* the mark is white glass: darken it on the light app theme */
 :root:not([data-theme="dark"]) .side .logo-mark{filter:invert(1) brightness(.35)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .side .logo-mark{filter:none}}
+/* ================= WORKSPACE (conversation + dashboard) ================= */
+body.ws-mode .proto{top:calc(12px + env(safe-area-inset-top,0px));bottom:auto;right:404px}
+body.ws-mode .proto-menu{top:44px;bottom:auto}
+@media (max-width:1180px){body.ws-mode .proto{right:360px}}
+@media (max-width:900px){body.ws-mode .proto{right:16px}}
+.ws{display:grid;grid-template-columns:240px minmax(0,1fr) 384px;height:100%;position:relative;isolation:isolate;background:var(--bg);color:var(--ink)}
+.ws::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(38% 46% at 6% 4%,var(--amb1),transparent 70%),radial-gradient(40% 50% at 98% 100%,var(--amb2),transparent 70%),radial-gradient(30% 36% at 60% 10%,var(--amb3),transparent 70%)}
+.ws-side{display:flex;flex-direction:column;gap:18px;padding:14px 12px;min-height:0;overflow-y:auto;background:var(--glass);border-right:1px solid var(--glass-line);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur)}
+.ws-side .logo{color:var(--ink);padding:4px 8px}
+.ws-group{display:flex;flex-direction:column;gap:2px}
+.ws-gh{font-size:12px;color:var(--ink-3);padding:0 10px;margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
+.ws-item{display:flex;flex-direction:column;align-items:flex-start;gap:1px;width:100%;text-align:left;padding:7px 10px;border-radius:9px;font-size:14px;color:var(--ink-2)}
+.ws-item:hover{background:var(--surface-2);color:var(--ink)}
+.ws-item.on{background:var(--glass-strong);color:var(--ink);box-shadow:var(--glass-hi),0 0 0 1px var(--glass-line)}
+.ws-item small{font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:6px}
+.ws-item small i{width:6px;height:6px;border-radius:50%;background:var(--ink-3)}
+.ws-item small i.hot{background:var(--accent)}.ws-item small i.ok{background:var(--good)}
+.ws-item.row{flex-direction:row;align-items:center;justify-content:space-between}
+.ws-empty{font-size:13px;color:var(--ink-3);padding:4px 10px}
+.ws-add{font-size:13px;color:var(--ink-2);padding:6px 10px;text-align:left;border-radius:8px}
+.ws-add:hover{color:var(--ink);background:var(--surface-2)}
+.soon{font-family:var(--mono);font-size:10px;letter-spacing:.03em;padding:1px 7px;border-radius:999px;border:1px dashed var(--line-2);color:var(--ink-3);white-space:nowrap}
+.ws-foot{margin-top:auto;display:flex;flex-direction:column;gap:2px}
+.ws-foot button{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;font-size:13px;color:var(--ink-2);text-align:left;min-width:0}
+.ws-foot button:hover{background:var(--surface-2);color:var(--ink)}
+.ws-foot button span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ws-foot .av-s{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:600;background:var(--primary);color:var(--on-primary);flex:none}
+
+.ws-main{overflow-y:auto;min-height:0;padding:28px clamp(20px,3.5vw,48px) 56px}
+.ws-in{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.ws-crumb{font-size:13px;color:var(--ink-3)}
+.ws-h1{font-family:var(--display);font-weight:500;font-size:clamp(28px,3vw,36px);line-height:1.15;letter-spacing:-.01em;margin:2px 0 0}
+:lang(zh) .ws-h1{font-weight:500;letter-spacing:0}
+.ws-sub{font-size:14px;color:var(--ink-3);margin:0}
+.ws-url{font-family:var(--mono);font-size:13px;color:var(--ink-2)}
+.ws-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ws-tile{padding:18px 20px;border-radius:16px;background:var(--glass-strong);border:1px solid var(--glass-line);box-shadow:var(--glass-hi);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur)}
+.ws-tile.focus{border-color:color-mix(in srgb,var(--accent) 60%,transparent);box-shadow:var(--glass-hi),0 0 0 3px color-mix(in srgb,var(--accent) 18%,transparent)}
+.ws-tile label{display:block;font-size:13px;color:var(--ink-2)}
+.ws-tile .num{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:40px;font-weight:500;letter-spacing:-.03em;line-height:1.1;margin-top:8px}
+.ws-tile .num span{font-size:18px;color:var(--ink-3)}
+.ws-tile .skel{width:96px;height:36px;margin-top:10px}
+.ws-toggle{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-2);align-self:flex-start}
+.ws-toggle:hover{color:var(--ink)}
+.ws-toggle::before{content:"";width:0;height:0;border-left:5px solid currentColor;border-top:4px solid transparent;border-bottom:4px solid transparent;transition:transform .15s}
+.ws-toggle.open::before{transform:rotate(90deg)}
+.ws-box{padding:16px 18px;border-radius:14px;background:var(--glass-sunken);border:1px solid var(--glass-line);font-size:14px}
+.ws-box p{margin:0}.ws-box p+p{margin-top:8px}
+.ws-lab{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px}
+:lang(zh) .ws-lab{text-transform:none;letter-spacing:0;font-family:var(--sans);font-size:12px}
+.ws-hr{height:1px;background:var(--glass-line);border:0;margin:6px 0}
+.ws-sec h3{font-size:13px;font-weight:500;color:var(--ink-3);margin:0 0 6px}
+.ws-sec p{margin:0}
+.ws-recent{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:18px 20px;border-radius:16px;background:var(--glass-strong);border:1px solid var(--glass-line);box-shadow:var(--glass-hi)}
+.ws-recent .t{flex:1;min-width:200px}
+.ws-recent b{display:block;font-weight:600;font-size:16px}
+.ws-recent small{color:var(--ink-3);font-size:13px}
+.ws-soonrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ws-soonrow div{padding:14px 16px;border-radius:14px;border:1px dashed var(--line-2);color:var(--ink-3);font-size:13px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.ws-soonrow b{color:var(--ink-2);font-weight:500;font-size:14px}
+.ws-add-block{border-radius:10px;background:var(--add-bg);border-top:1px dashed var(--add-line);padding:12px 14px}
+.ws-add-block b{display:block;font-weight:600;margin-bottom:2px}
+.ws-quote{font-family:var(--display);font-size:17px;line-height:1.45;color:var(--ink)}
+.ws-status{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:13px}
+.ws-callout{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;padding:16px 18px;border-radius:14px;border:1px dashed var(--line-2)}
+.ws-callout b{font-weight:600}
+.ws-callout p{margin:4px 0 0;color:var(--ink-2);font-size:14px;max-width:52ch}
+
+.ws-chat{display:grid;grid-template-rows:auto minmax(0,1fr) auto;min-height:0;border-left:1px solid var(--glass-line);background:var(--glass);-webkit-backdrop-filter:var(--glass-blur);backdrop-filter:var(--glass-blur)}
+.ws-chat-h{padding:16px 18px;border-bottom:1px solid var(--glass-line)}
+.ws-chat-h b{display:block;font-weight:600;font-size:15px}
+.ws-chat-h small{font-size:12px;color:var(--ink-3)}
+.ws-chat-b{overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:14px}
+.cb-a{display:flex;flex-direction:column;gap:8px;font-size:14px;align-items:flex-start}
+.cb-a .who{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-3)}
+.cb-a p{margin:0;line-height:1.55}
+.cb-u{align-self:flex-end;max-width:85%;background:color-mix(in srgb,var(--user-bg) 82%,transparent);color:var(--user-ink);padding:8px 13px;border-radius:14px 14px 4px 14px;font-size:14px}
+.cc{width:100%;border-radius:14px;background:var(--glass-strong);border:1px solid var(--glass-line);box-shadow:var(--glass-hi),0 14px 30px -20px var(--glass-edge);overflow:hidden}
+.cc-h{padding:10px 14px;font-size:12px;font-weight:600;border-bottom:1px solid var(--glass-line)}
+.cc-b{padding:12px 14px;display:flex;flex-direction:column;gap:10px;font-size:14px}
+.cc-cur{color:var(--ink-3)}
+.cc-f{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:10px 14px 12px;border-top:1px solid var(--glass-line)}
+.cc-f small{flex-basis:100%;font-size:12px;color:var(--ink-3)}
+.cb-fold{width:100%;font-size:13px}
+.cb-fold .ws-toggle{font-size:13px}
+.cb-fold .ws-box{margin-top:8px;font-size:13px}
+.ws-chat-f{padding:12px 14px 16px;border-top:1px solid var(--glass-line)}
+.ws-chat-f form{display:flex;flex-direction:column;gap:8px}
+.ws-chat-f textarea{font:inherit;font-size:14px;color:var(--ink);background:var(--glass-sunken);border:1px solid var(--glass-line);border-radius:12px;padding:10px 12px;resize:none;min-height:58px;outline:none}
+.ws-chat-f textarea:focus{border-color:var(--accent)}
+.ws-chat-f .row{display:flex;justify-content:flex-end}
+
+@media (max-width:1180px){.ws{grid-template-columns:220px minmax(0,1fr) 340px}}
+@media (max-width:900px){
+  body.in-app.ws-mode{overflow:auto}
+  .ws{display:flex;flex-direction:column;height:auto;min-height:100%}
+  .ws-side{flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 12px;border-right:0;border-bottom:1px solid var(--glass-line);overflow:visible}
+  .ws-side .ws-group,.ws-side .ws-foot{display:none}
+  .ws-main{overflow:visible;padding:20px 16px 28px}
+  .ws-chat{border-left:0;border-top:1px solid var(--glass-line);min-height:420px}
+  .ws-tiles,.ws-soonrow{grid-template-columns:1fr}
+}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 </style>
 
@@ -648,6 +751,9 @@ body.in-app .proto{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
   <main class="dg" id="diag-body"></main>
 </div>
 
+<!-- ============ WORKSPACE ============ -->
+<div id="ws" class="ws" hidden><aside class="ws-side" id="ws-side"></aside><main class="ws-main" id="ws-main"></main><aside class="ws-chat" id="ws-chat"></aside></div>
+
 <!-- ============ APP ============ -->
 <div id="app" class="app" hidden>
   <aside class="side" id="side">
@@ -709,15 +815,18 @@ body.in-app .proto{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
   <div class="proto-menu" id="proto-menu" hidden>
     <p data-i18n="proto.h"></p>
     <button type="button" data-jump="landing"><span>00</span><b data-i18n="proto.landing"></b></button>
-    <button type="button" data-jump="checking"><span>01</span><b data-i18n="proto.checking"></b></button>
-    <button type="button" data-jump="confirm"><span>01b</span><b data-i18n="proto.confirm"></b></button>
-    <button type="button" data-jump="scope"><span>01c</span><b data-i18n="proto.scope"></b></button>
-    <button type="button" data-jump="report"><span>01d</span><b data-i18n="proto.report"></b></button>
-    <button type="button" data-jump="finding"><span>02</span><b data-i18n="proto.finding"></b></button>
-    <button type="button" data-jump="signup"><span>··</span><b data-i18n="proto.signup"></b></button>
-    <button type="button" data-jump="draft"><span>03</span><b data-i18n="proto.draft"></b></button>
-    <button type="button" data-jump="scheduled"><span>04</span><b data-i18n="proto.scheduled"></b></button>
-    <button type="button" data-jump="return"><span>05</span><b data-i18n="proto.return"></b></button>
+    <button type="button" data-jump="checking"><span>C02</span><b data-i18n="proto.c02"></b></button>
+    <button type="button" data-jump="confirm"><span>C03</span><b data-i18n="proto.c03"></b></button>
+    <button type="button" data-jump="scope"><span>C04</span><b data-i18n="proto.c04"></b></button>
+    <button type="button" data-jump="auth"><span>··</span><b data-i18n="proto.auth"></b></button>
+    <button type="button" data-jump="c05"><span>C05</span><b data-i18n="proto.c05"></b></button>
+    <button type="button" data-jump="c06"><span>C06</span><b data-i18n="proto.c06"></b></button>
+    <button type="button" data-jump="c06b"><span>C06</span><b data-i18n="proto.c06b"></b></button>
+    <button type="button" data-jump="c06c"><span>C06</span><b data-i18n="proto.c06c"></b></button>
+    <button type="button" data-jump="c06d"><span>C06</span><b data-i18n="proto.c06d"></b></button>
+    <button type="button" data-jump="c07"><span>C07</span><b data-i18n="proto.c07"></b></button>
+    <button type="button" data-jump="c07b"><span>C07</span><b data-i18n="proto.c07b"></b></button>
+    <button type="button" data-jump="c08"><span>C08</span><b data-i18n="proto.c08"></b></button>
     <hr>
     <button type="button" data-act="lang"><span>Aa</span><b data-i18n="lang.name"></b></button>
   </div>
@@ -731,7 +840,8 @@ body.in-app .proto{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
 var Q4 = "How do I turn meeting notes into action items?";
 var T = {
 en:{
- "dg.step1":"Your website","dg.step2":"Your business","dg.step3":"Questions","back":"Back",
+ "d16full":"Sep 16 · 09:00","w.nav.overview":"Site overview","w.nav.topics":"My topics","w.nav.notopics":"No topics yet","w.nav.startsite":"Start from your site","w.nav.results":"Drafts & results","w.nav.noresults":"No results yet","w.nav.more":"More","w.nav.scope":"Site profile & scope","w.soon":"Soon","w.more.briefs":"Content briefs","w.more.rank":"Rank tracking","w.more.audit":"Site audit","w.more.cms":"CMS publishing","w.topic.name":"Meetings page visibility","w.topic.site":"About your site","w.topic.page":"Meetings page","w.topic.siteH":"Your site's description","w.topic.siteSub":"Starting from your site's context. The assistant only writes a draft when you ask for one.","w.topic.home":"Homepage description","w.topic.orig":"Site original · kept","w.topic.record":"Original record · kept","w.topic.ans":"Related answer and sources","w.topic.ansLab":"Original answer · example #04","w.topic.notm":"Doesn't mention Northstar Notes · doesn't cite your site","w.topic.ansMeta":"Sep 16, 09:00 · same example engine · US / English","w.topic.ansNote":"Example data only, no real answer URL. The real product keeps the full answer, sources and citations. One missing citation isn't proof of cause.","w.topic.openChange":"Open original and changes","w.topic.openDraft":"Open saved draft","w.topic.openOrig":"Open kept original","w.topic.ctx":"Site context loaded; no single check selected yet.","w.ov.h1":"Visibility","w.ov.lastfull":"last full check","w.m.mentioned":"Brand mentioned","w.m.cited":"Your site cited","w.ov.measuring":"First check in progress · asking ChatGPT {n}/10","w.ov.details":"Metric details","w.ov.pos":"Relative position","w.ov.meta":"Sep 16, 09:00 · US / English · same example engine","w.ov.sample":"10 questions · 8 brands · first full sample, so no comparable change yet.","w.ov.scopeNote":"This describes only this sample. It isn't a global ranking or traffic. Original answers and citations open inside topics.","w.ov.latest":"Latest update","w.ov.latest.run":"First check in progress","w.ov.latest.done":"First check complete","w.ov.latest.none":"No new check yet","w.ov.recent":"Recent chats","w.ov.norecent":"No chats yet","w.ov.more":"More dashboards","w.st.pending":"1 change to review","w.st.pendingSite":"1 change to review · site unchanged","w.st.adopted":"Saved · not published","w.st.declined":"Original kept","w.st.discussion":"Discussing · no draft","w.res.faq":"Meetings page FAQ","w.res.orig":"Meetings page original","w.see.change":"See the change","w.see.draft":"See draft","w.see.orig":"See original","w.cont":"Continue chat","w.rv.crumb":"Changes","w.rv.back":"Back to chat","w.rv.notpub":"Not published","w.rv.unchanged":"Unchanged","w.rv.saved":"Saved site original","w.rv.keepAdd":"Keep the original, add a FAQ","w.rv.draft":"Saved draft","w.rv.kept":"Kept original","w.rv.notChanged":"Not changed this time.","w.rv.hist":"Source and save history","w.rv.src":"Site original","w.rv.srcNote":"Saved from the meetings page. All hand edits and saved content are kept; using a change creates a new save record and never overwrites the source.","w.rv.v.pending":"Original v1 · suggestion based on v1","w.rv.v.adopted":"Site original v1 kept · draft v2 has the original plus the full Q&A","w.rv.v.declined":"Site original v1 kept · suggestion not applied","w.rv.publishH":"Need it on your website?","w.rv.publishP":"Just ask in this chat. We'll only connect your CMS when needed, show the target page and the change, then ask you to confirm.","w.rv.publishSoon":"Publishing · coming soon","w.c.title":"Assistant","w.c.current":"Current: {x}","w.c.suggest":"The action-items part of your meetings page could use a short FAQ.","w.c.see":"See the change","w.c.measuring":"I'm running your first check. Ask me anything meanwhile.","w.c.ccH":"Meetings page · add a FAQ","w.c.orig":"Site original","w.c.new":"New","w.c.use":"Use this","w.c.notnow":"Not now","w.c.hint":"Saves to draft · doesn't publish","w.c.useU":"Use this.","w.c.notnowU":"Not now.","w.c.savedMsg":"Saved to draft. Your website hasn't changed.","w.c.declinedMsg":"Okay, no FAQ this time. Your original stays as it is.","w.c.pendingLeft":"The FAQ I prepared is waiting in the topic.","w.c.seeDraft":"See saved draft","w.c.seeOrig":"See kept original","w.c.earlier":"Earlier messages","w.c.firstOrig":"first site original","w.c.prepared":"Prepared change:","w.c.discU":"Help me check if my site's description is easy to understand first. Don't write anything yet.","w.c.discA":"Sure, let's review the current description first. This answer doesn't cite your site, so we can't tell why yet.","w.c.phStart":"Or just tell me what you want to do…","w.c.phMore":"Tell me what else to change…","w.c.phReturn":"Pick up where we left off…","w.c.chat":"Chat","w.c.send":"Send","w.c.free":"Free chat is coming soon in this prototype. Use the buttons above to keep going.","w.toast.soon":"Coming soon","w.toast.done":"First check complete","a.skip":"Skip waiting, chat first","c.skip":"Later — chat first","s.skip":"Chat first, set up later","auth.workspace.t":"Create your workspace","auth.workspace.s":"Keep your site, your checks and your chats in one place. Free, no credit card.","proto.c02":"C02 Analyzing","proto.c03":"C03 Confirm business","proto.c04":"C04 Scope","proto.auth":"Create workspace","proto.c05":"C05 Workspace","proto.c06":"C06 Decide in chat","proto.c06b":"C06 · Used","proto.c06c":"C06 · Not now","proto.c06d":"C06 · Discuss only","proto.c07":"C07 Review changes","proto.c07b":"C07 · Saved draft","proto.c08":"C08 Coming back",
+  "dg.step1":"Your website","dg.step2":"Your business","dg.step3":"Questions","back":"Back",
  "a.kicker":"Getting to know your website","a.sub":"First we read your site, then prepare questions about your business.","a.r1":"Read public pages","a.r1d":"3 pages","a.r2":"Understand your business and customers","a.r3":"Prepare questions","a.r3d":"10 questions","a.working":"Working…","a.waiting":"Not started","a.cont":"See what we found",
  "c.kicker":"Based on your public pages","c.h1":"Here's what we understood","c.sub":"Take a look. Only change what's wrong.","c.brand":"Website / brand","c.what":"About","c.market":"Market / language","c.unsure":"Not sure","c.edit":"Something wrong? Edit","c.save":"Save changes","c.saved":"Saved","c.ok":"Looks right, continue","c.note":"Not sure about the market or language? You can confirm it later.",
  "s.kicker":"Suggested · change anytime","s.h1":"We'll check your visibility with these questions","s.sub":"We prepared these for you. Start now, or adjust them first.","s.q":"Customers might ask","s.qn":"10 questions · showing 3","s.b":"Brands we'll compare you with","s.you":"(you)","s.bn":"8 brands in total. This is just a comparison set, not a list of confirmed competitors.","s.adjust":"Adjust questions or brands","s.adjustd":"In the full version you can add or remove questions and brands here.","s.start":"Start check","s.running":"Asking ChatGPT · {n}/10",
@@ -796,7 +906,8 @@ en:{
  "proto.btn":"Prototype","proto.h":"Jump to a step","proto.landing":"Homepage","proto.checking":"Checking the site","proto.finding":"First fix","proto.draft":"After “Use this fix”","proto.scheduled":"Waiting to check again","proto.return":"Coming back · results"
 },
 zh:{
- "dg.step1":"你的网站","dg.step2":"你的业务","dg.step3":"问题","back":"上一步",
+ "d16full":"9 月 16 日 · 09:00","w.nav.overview":"网站概览","w.nav.topics":"我的话题","w.nav.notopics":"还没有话题","w.nav.startsite":"从网站开始聊","w.nav.results":"草稿与成果","w.nav.noresults":"还没有成果","w.nav.more":"更多","w.nav.scope":"网站理解与范围","w.soon":"即将上线","w.more.briefs":"内容简报","w.more.rank":"排名追踪","w.more.audit":"网站体检","w.more.cms":"CMS 发布","w.topic.name":"会议页面曝光","w.topic.site":"关于你的网站","w.topic.page":"会议页面","w.topic.siteH":"网站说明","w.topic.siteSub":"从已有的网站背景开始聊。你要求时，助手才会写稿。","w.topic.home":"首页说明","w.topic.orig":"网站原文 · 已留存","w.topic.record":"原文记录 · 保留","w.topic.ans":"查看相关回答与出处","w.topic.ansLab":"原回答 · 示例 #04","w.topic.notm":"未提及 Northstar Notes · 未引用本站","w.topic.ansMeta":"9 月 16 日 09:00 · 同一示例引擎 · 美国 / 英语","w.topic.ansNote":"全部为设计样本，没有真实回答 URL；实际产品须保留完整回答、出处与引用。单次未引用不能作为因果结论。","w.topic.openChange":"展开原文与改动","w.topic.openDraft":"展开已保存的草稿","w.topic.openOrig":"展开保留的原文","w.topic.ctx":"已有网站背景，尚未选择某条观测。","w.ov.h1":"网站曝光","w.ov.lastfull":"上次完整观测","w.m.mentioned":"品牌被提及","w.m.cited":"本站被引用","w.ov.measuring":"第一份观测进行中 · 正在询问 ChatGPT {n}/10","w.ov.details":"查看指标明细","w.ov.pos":"品牌相对位置","w.ov.meta":"9 月 16 日 09:00 · 美国 / 英语 · 同一示例引擎","w.ov.sample":"10 个问题 · 8 个品牌 · 第一份完整样本，暂无可比变化。","w.ov.scopeNote":"只描述这组样本，不是全网排名或流量；原回答与引用可在话题中展开。","w.ov.latest":"最近更新","w.ov.latest.run":"第一份观测进行中","w.ov.latest.done":"第一份观测已完成","w.ov.latest.none":"暂无新观测","w.ov.recent":"最近对话","w.ov.norecent":"还没有对话","w.ov.more":"更多看板","w.st.pending":"有一处改动可看","w.st.pendingSite":"有一处改动可看 · 网站未改动","w.st.adopted":"已保存 · 未发布","w.st.declined":"原文保留","w.st.discussion":"讨论中 · 未备稿","w.res.faq":"会议页面 FAQ","w.res.orig":"会议页面原文","w.see.change":"展开改动","w.see.draft":"查看草稿","w.see.orig":"查看原文","w.cont":"继续对话","w.rv.crumb":"展开改动","w.rv.back":"回到对话","w.rv.notpub":"未发布","w.rv.unchanged":"本次未修改","w.rv.saved":"已留存的网站原文","w.rv.keepAdd":"保留原文，补充 FAQ","w.rv.draft":"已保存的草稿","w.rv.kept":"保留的原文","w.rv.notChanged":"本次未修改。","w.rv.hist":"原文来源与保存记录","w.rv.src":"网站原文","w.rv.srcNote":"原文从会议页面留存；所有人工修改和已保存内容保留。采用时生成新保存记录，不覆盖来源。","w.rv.v.pending":"原文 v1 · 建议基于 v1","w.rv.v.adopted":"网站原文 v1 保留 · 草稿 v2 包含原文与完整问答","w.rv.v.declined":"网站原文 v1 保留 · 建议未应用","w.rv.publishH":"需要放到网站上？","w.rv.publishP":"在这段对话里提出即可；缺少连接时才接 CMS，展示目标页面与改动预览，再单独确认发布。","w.rv.publishSoon":"发布 · 即将上线","w.c.title":"与助手对话","w.c.current":"当前：{x}","w.c.suggest":"会议页面的行动项说明可以补一段 FAQ。","w.c.see":"看看改动","w.c.measuring":"正在进行第一份观测，这期间可以随时问我。","w.c.ccH":"会议页面 · 补充 FAQ","w.c.orig":"网站原文","w.c.new":"新增","w.c.use":"采用这段","w.c.notnow":"先不改","w.c.hint":"保存到草稿 · 不发布","w.c.useU":"采用这段。","w.c.notnowU":"先不改。","w.c.savedMsg":"已保存到草稿，网站还没有改动。","w.c.declinedMsg":"好，这次不加 FAQ。原文保持不动。","w.c.pendingLeft":"上次准备的 FAQ 留在原话题里。","w.c.seeDraft":"查看已保存的草稿","w.c.seeOrig":"查看保留的原文","w.c.earlier":"前面的对话","w.c.firstOrig":"最初的网站原文","w.c.prepared":"准备的具体改动：","w.c.discU":"先帮我看看网站的说明是否容易被理解，不要马上写稿。","w.c.discA":"好，先核对现有说明。这一条回答没有引用本站，还不能据此判断原因。","w.c.phStart":"也可以直接说你想做什么…","w.c.phMore":"继续说想改的地方…","w.c.phReturn":"接着上次说…","w.c.chat":"直接聊","w.c.send":"发送","w.c.free":"原型中自由对话即将上线，可以先用上面的按钮继续。","w.toast.soon":"即将上线","w.toast.done":"第一份观测已完成","a.skip":"不等了，先聊","c.skip":"稍后完善，先聊","s.skip":"先聊，稍后设置","auth.workspace.t":"创建你的工作区","auth.workspace.s":"网站、观测和对话都保存在一起。免费，不需要信用卡。","proto.c02":"C02 分析与等待","proto.c03":"C03 确认网站理解","proto.c04":"C04 建议观察范围","proto.auth":"创建工作区","proto.c05":"C05 网站工作页","proto.c06":"C06 在对话里拍板","proto.c06b":"C06 · 已采用","proto.c06c":"C06 · 先不改","proto.c06d":"C06 · 只讨论不备稿","proto.c07":"C07 展开原文与改动","proto.c07b":"C07 · 已保存草稿","proto.c08":"C08 回访接续",
+  "dg.step1":"你的网站","dg.step2":"你的业务","dg.step3":"问题","back":"上一步",
  "a.kicker":"正在了解你的网站","a.sub":"先读取你的网站，再准备和你业务相关的问题。","a.r1":"读取公开页面","a.r1d":"已整理 3 个页面","a.r2":"理解业务与主要客户","a.r3":"准备要问的问题","a.r3d":"10 个问题","a.working":"正在处理","a.waiting":"尚未开始","a.cont":"查看网站理解",
  "c.kicker":"根据网站公开内容整理","c.h1":"这是我们对你网站的理解","c.sub":"看一下是否准确，不对的地方再修改。","c.brand":"网站 / 品牌","c.what":"网站介绍","c.market":"主要市场 / 内容语言","c.unsure":"待确认","c.edit":"有不准确的地方？修改","c.save":"保存修改","c.saved":"已保存","c.ok":"理解正确，继续","c.note":"不确定的市场和语言可以稍后确认，不影响检查。",
  "s.kicker":"建议范围 · 随时可改","s.h1":"先用这些问题了解你的曝光","s.sub":"我们先准备了一组建议，你可以直接开始，也可以先调整。","s.q":"客户可能会问","s.qn":"共 10 个问题 · 此处列出 3 个","s.b":"和哪些品牌一起比较","s.you":"（你）","s.bn":"共 8 个品牌；这只是比较对象，不代表确定的竞争关系。","s.adjust":"调整问题或品牌","s.adjustd":"正式版中可以在这里增删问题和品牌。","s.start":"开始检查","s.running":"正在询问 ChatGPT · {n}/10",
@@ -1065,7 +1176,8 @@ function authDone(email){
   var mode = S.auth && S.auth.mode, pending = S.pending;
   S.user = {email:email}; S.auth = null; S.pending = null; $("auth").hidden = true;
   toast(t("toast.signed",{email:email}));
-  if(mode==="login" && S.view==="landing"){ jump("return"); return; }
+  if(mode==="login" && S.view==="landing"){ wsJump("c08"); return; }
+  if(pending && pending.indexOf("ws:")===0){ enterWS(pending.slice(3)); return; }
   render();
   if(pending==="report"){ enterApp(); return; }
   if(pending==="apply") act("apply");
@@ -1108,9 +1220,9 @@ async function say(key, vars){ var ty = push({type:"typing"}); await sleep(650);
 
 function show(view){
   S.view = view;
-  $("landing").hidden = view!=="landing"; $("app").hidden = view!=="app"; $("diag").hidden = view!=="diag";
-  document.body.classList.toggle("in-app", view==="app");
-  if(view==="app"){ render(); } else if(view==="diag"){ window.scrollTo(0,0); diagLoop(); } else { window.scrollTo(0,0); var L = $("landing"); L.classList.remove("play"); void L.offsetWidth; L.classList.add("play"); heroIntro(); }
+  $("landing").hidden = view!=="landing"; $("app").hidden = view!=="app"; $("diag").hidden = view!=="diag"; $("ws").hidden = view!=="ws";
+  document.body.classList.toggle("in-app", view==="app"||view==="ws"); document.body.classList.toggle("ws-mode", view==="ws");
+  if(view==="app"){ render(); } else if(view==="ws"){ renderWS(); } else if(view==="diag"){ window.scrollTo(0,0); diagLoop(); } else { window.scrollTo(0,0); var L = $("landing"); L.classList.remove("play"); void L.offsetWidth; L.classList.add("play"); heroIntro(); }
   heroLoop();
 }
 function resetApp(){ var lang = S.lang, user = S.user; runId++; S = fresh(); S.lang = lang; S.user = user; cache = {}; $("thread-inner").innerHTML = ""; closeDrawer(); }
@@ -1136,7 +1248,7 @@ function renderDiagParts(){
     rows.forEach(function(r,i){ var cls = i<d?"done":(i===d?"now":""), st = i<d?(r[1]?t(r[1]):"✓"):(i===d?t("a.working"):t("a.waiting"));
       h += '<li class="'+cls+'"><span class="ic">'+(i<d?I.check:"")+'</span><span class="lbl">'+t(r[0])+'</span><span class="st">'+st+'</span></li>'; });
     part("dg-rows", h+'</ul>');
-    part("dg-act", '<button class="btn btn-primary dg-btn" data-act="dg-next"'+(d<3?' disabled':'')+'>'+t("a.cont")+' '+I.arrow.replace('<svg ','<svg width="16" height="16" ')+'</button>');
+    part("dg-act", '<button class="btn btn-primary dg-btn" data-act="dg-next"'+(d<3?' disabled':'')+'>'+t("a.cont")+' '+I.arrow.replace('<svg ','<svg width="16" height="16" ')+'</button><button class="btn btn-quiet" data-act="dg-skip">'+t("a.skip")+'</button>');
   }
   if(S.diag.phase==="running"){
     part("dg-act", '<div class="dg-run"><ul class="run" style="margin:0"><li class="now"><span class="ic"></span><span>'+t("s.running",{n:S.asked})+'</span><span></span></li></ul><div class="bar"><i style="width:'+(S.asked*10)+'%"></i></div></div>');
@@ -1157,7 +1269,7 @@ function renderDiag(){
         '<label for="dg-brand">'+t("c.brand")+'<input id="dg-brand" value="'+esc(S.undBrand)+'"></label>'+
         '<label for="dg-what">'+t("c.what")+'<textarea id="dg-what" rows="2">'+esc(what)+'</textarea></label>'+
         '<div><button class="btn btn-line" data-act="dg-save">'+t("c.save")+'</button></div></div></details>'+
-      '<div class="dg-actions dg-in">'+arrowBtn("c.ok","dg-next")+'<button class="btn btn-quiet" data-act="dg-back">'+t("back")+'</button></div>'+
+      '<div class="dg-actions dg-in">'+arrowBtn("c.ok","dg-next")+'<button class="btn btn-quiet" data-act="dg-skip">'+t("c.skip")+'</button><button class="btn btn-quiet" data-act="dg-back">'+t("back")+'</button></div>'+
       '<p class="fine dg-in">'+t("c.note")+'</p>';
     $("diag-body").innerHTML = h; return;
   }
@@ -1169,7 +1281,7 @@ function renderDiag(){
       '<div class="scope-grid dg-in"><div class="card card-pad"><div class="card-t">'+t("s.q")+'</div><ul class="qlist">'+qs+'</ul><div class="fine">'+t("s.qn")+'</div></div>'+
       '<div class="card card-pad"><div class="card-t">'+t("s.b")+'</div><div class="brands" style="margin:12px 0">'+brands+'</div><div class="fine">'+t("s.bn")+'</div></div></div>'+
       '<details class="dg-more dg-in"><summary>'+t("s.adjust")+'</summary><div class="card card-pad" style="margin-top:10px"><ol class="qlist num">'+allq+'</ol><p class="fine" style="margin-top:10px">'+t("s.adjustd")+'</p></div></details>'+
-      '<div class="dg-actions dg-in" id="dg-act">'+arrowBtn("s.start","dg-start")+'<button class="btn btn-quiet" data-act="dg-back">'+t("back")+'</button></div>';
+      '<div class="dg-actions dg-in" id="dg-act">'+arrowBtn("s.start","dg-start")+'<button class="btn btn-quiet" data-act="dg-skip">'+t("s.skip")+'</button><button class="btn btn-quiet" data-act="dg-back">'+t("back")+'</button></div>';
     $("diag-body").innerHTML = h; if(ph==="running") renderDiagParts(); return;
   }
   h = '<div class="dg-head dg-in"><div class="kicker">'+t("rp.kicker",{date:t("d16")})+'</div><h1>'+t("rp.h1",{brand:esc(S.undBrand),m:6})+'</h1><p class="dg-sub">'+t("rp.sub")+'</p></div>'+
@@ -1194,7 +1306,7 @@ async function runMeasure(){
   var id = runId; S.diag.phase = "running"; S.asked = 0; renderDiagParts();
   try{
     for(var n=1;n<=10;n++){ await sleep(320); check(id); S.asked = n; renderDiagParts(); }
-    await sleep(400); check(id); S.metrics = {m:6,c:2}; goPhase("report");
+    await sleep(400); check(id); S.metrics = {m:6,c:2}; finishOnboarding("measured");
   }catch(e){ if(e!=="cancel") throw e; }
 }
 function enterApp(){
@@ -1207,9 +1319,174 @@ function enterApp(){
 
 function base(){ resetApp(); S.fast = true; S.view = "app"; S.stepsDone = 4; S.asked = 10; S.und = "confirmed";
   S.metrics = {m:6,c:2}; push({type:"ai", key:"msg.welcome"}); S.fs = "proposed"; push({type:"finding"}); }
+var LOGO_IMG = (document.querySelector(".logo-mark")||{}).outerHTML||"";
+/* ------------------------------------------------------------------ workspace: conversation + dashboard */
+var WS_CUR = "Northstar Notes helps teams record meetings and organize notes.";
+var WS_Q = "How do I turn meeting notes into action items?";
+var WS_A = "After each meeting, list every to-do and check its owner and due date, so the team can keep following up.";
+var WS_QUOTE = "“When choosing a tool, look at whether it can pick out owners, deadlines and follow-ups from your meeting notes.”";
+function wsFresh(){ return {page:"overview", stage:"none", returned:false, measuring:false, asked:10, discussion:false,
+  open:{details:false, ans:false, hist:false, draft:false, earlier:false}, extra:[]}; }
+function hasTopic(){ return S.ws.stage!=="none" || S.ws.discussion; }
+function wsDraftName(){ return S.ws.stage==="declined" ? t("w.res.orig") : t("w.res.faq"); }
+function wsDraftStatus(){ return {pending:t("w.st.pending"), adopted:t("w.st.adopted"), declined:t("w.st.declined")}[S.ws.stage]||""; }
+function tog(key, label){ return '<button class="ws-toggle'+(S.ws.open[key]?' open':'')+'" data-act="ws-open" data-k="'+key+'" aria-expanded="'+S.ws.open[key]+'">'+label+'</button>'; }
+function linkBtn(label, a, extra){ return '<button class="link" data-act="'+a+'"'+(extra||'')+'>'+label+'</button>'; }
+
+function wsSide(){
+  var W = S.ws, h = '';
+  h += '<div class="logo">'+LOGO_IMG+'opcmaster</div>';
+  h += '<button class="site-switch" type="button" data-act="ws-soon"><span class="site-fav">N</span><span><b>'+esc(S.undBrand)+'</b><small>'+esc(S.domain)+'</small></span></button>';
+  h += '<div class="ws-group"><button class="ws-item'+(W.page==="overview"?' on':'')+'" data-act="ws-go" data-p="overview">'+t("w.nav.overview")+'</button></div>';
+  h += '<div class="ws-group"><div class="ws-gh">'+t("w.nav.topics")+'</div>';
+  if(hasTopic()) h += '<button class="ws-item'+(W.page!=="overview"?' on':'')+'" data-act="ws-go" data-p="topic">'+t(W.discussion&&W.stage==="none"?"w.topic.site":"w.topic.name")+'</button>';
+  else h += '<div class="ws-empty">'+t("w.nav.notopics")+'</div>';
+  h += '<button class="ws-add" data-act="ws-discuss">+ '+t("w.nav.startsite")+'</button></div>';
+  h += '<div class="ws-group"><div class="ws-gh">'+t("w.nav.results")+'</div>';
+  if(W.stage!=="none"){ var dot = W.stage==="pending"?"hot":(W.stage==="adopted"?"ok":"");
+    h += '<button class="ws-item'+(W.page==="review"?' on':'')+'" data-act="ws-go" data-p="review">'+wsDraftName()+'<small><i class="'+dot+'"></i>'+wsDraftStatus()+'</small></button>'; }
+  else h += '<div class="ws-empty">'+t("w.nav.noresults")+'</div>';
+  h += '</div>';
+  h += '<div class="ws-group"><div class="ws-gh">'+t("w.nav.more")+'</div>';
+  ["w.more.briefs","w.more.rank","w.more.audit","w.more.cms"].forEach(function(k){ h += '<button class="ws-item row" data-act="ws-soon"><span>'+t(k)+'</span><span class="soon">'+t("w.soon")+'</span></button>'; });
+  h += '</div>';
+  h += '<div class="ws-foot"><button data-act="ws-soon">'+t("w.nav.scope")+'</button><button data-act="lang">'+t("lang.name")+'</button>';
+  if(S.user) h += '<button data-act="ws-soon"><span class="av-s">'+esc(S.user.email.charAt(0).toUpperCase())+'</span><span>'+esc(S.user.email)+'</span></button>';
+  h += '<button data-act="home">'+t("side.back")+'</button></div>';
+  return h;
+}
+
+function wsOverview(){
+  var W = S.ws, h = '<div class="ws-crumb">'+t("w.nav.overview")+'</div><h1 class="ws-h1">'+t("w.ov.h1")+'</h1>';
+  h += '<p class="ws-sub">'+t("d16full")+(W.returned?' · '+t("w.ov.lastfull"):'')+'</p>';
+  h += '<div class="ws-tiles">';
+  [["w.m.mentioned",6,false],["w.m.cited",2,!W.returned]].forEach(function(m){
+    h += '<div class="ws-tile'+(m[2]&&!W.measuring?' focus':'')+'"><label>'+t(m[0])+'</label>'+(W.measuring?'<div class="skel"></div>':'<div class="num">'+m[1]+'<span> / 10</span></div>')+'</div>'; });
+  h += '</div>';
+  if(W.measuring) h += '<p class="ws-sub">'+t("w.ov.measuring",{n:W.asked})+'</p>';
+  else {
+    h += tog("details", t("w.ov.details"));
+    if(W.open.details) h += '<div class="ws-box"><p>'+t("w.ov.pos")+' <b class="mono">#3 / 8</b></p><p class="muted">'+t("w.ov.meta")+'</p><p class="muted">'+t("w.ov.sample")+'</p><p class="muted small">'+t("w.ov.scopeNote")+'</p></div>';
+  }
+  h += '<hr class="ws-hr">';
+  h += '<div class="ws-sec"><h3>'+t("w.ov.latest")+'</h3><p>'+t(W.measuring?"w.ov.latest.run":(W.returned?"w.ov.latest.none":"w.ov.latest.done"))+'</p></div>';
+  h += '<div class="ws-sec"><h3>'+t("w.ov.recent")+'</h3>';
+  if(!hasTopic()) h += '<p class="muted">'+t("w.ov.norecent")+'</p></div>';
+  else {
+    var st = W.stage==="none" ? t("w.st.discussion") : (W.stage==="pending"?t("w.st.pendingSite"):wsDraftStatus());
+    var see = {pending:"w.see.change", adopted:"w.see.draft", declined:"w.see.orig"}[W.stage];
+    h += '</div><div class="ws-recent"><div class="t"><b>'+t(W.stage==="none"?"w.topic.site":"w.topic.name")+'</b><small>'+st+'</small></div>'+
+      '<button class="btn btn-primary" data-act="ws-go" data-p="topic">'+t("w.cont")+' →</button>'+(see?'<button class="btn btn-quiet" data-act="ws-go" data-p="review">'+t(see)+'</button>':'')+'</div>';
+  }
+  h += '<div class="ws-sec"><h3>'+t("w.ov.more")+'</h3></div><div class="ws-soonrow">'+
+    ["w.more.rank","w.more.audit","w.more.briefs"].map(function(k){ return '<div><b>'+t(k)+'</b><span class="soon">'+t("w.soon")+'</span></div>'; }).join("")+'</div>';
+  return h;
+}
+
+function wsTopic(){
+  var W = S.ws, disc = W.discussion && W.stage==="none";
+  var h = '<div class="ws-crumb">'+t("w.nav.topics")+' / '+t(disc?"w.topic.site":"w.topic.name")+'</div><h1 class="ws-h1">'+t(disc?"w.topic.siteH":"w.topic.page")+'</h1>';
+  if(disc){ h += '<p class="ws-sub">'+t("w.topic.siteSub")+'</p><div class="ws-box"><span class="ws-lab">'+t("w.topic.home")+'</span><p>'+WS_CUR+'</p></div>'; return h; }
+  h += '<div class="ws-url">northstar-notes.example/meetings</div>';
+  h += '<div class="ws-box"><span class="ws-lab">'+t(W.stage==="pending"?"w.topic.orig":"w.topic.record")+'</span><p>'+WS_CUR+'</p></div>';
+  h += tog("ans", t("w.topic.ans"));
+  if(W.open.ans) h += '<div class="ws-box"><span class="ws-lab">'+t("w.topic.ansLab")+'</span><p><b>'+WS_Q+'</b></p><p class="ws-quote">'+WS_QUOTE+'</p><p><span class="pill">'+t("w.topic.notm")+'</span></p><p class="muted small">'+t("w.topic.ansMeta")+'</p><p class="muted small">'+t("w.topic.ansNote")+'</p></div>';
+  var lk = {pending:"w.topic.openChange", adopted:"w.topic.openDraft", declined:"w.topic.openOrig"}[W.stage];
+  if(lk) h += '<div>'+linkBtn(t(lk)+' ↗',"ws-go",' data-p="review"')+'</div>';
+  h += '<p class="ws-sub">'+t("w.topic.ctx")+'</p>';
+  return h;
+}
+
+function wsReview(){
+  var W = S.ws, h = '<div class="ws-crumb">'+t("w.topic.name")+' / '+t("w.rv.crumb")+'</div><h1 class="ws-h1">'+wsDraftName()+'</h1>';
+  h += '<div class="ws-status">'+linkBtn('← '+t("w.rv.back"),"ws-go",' data-p="topic"')+'<span class="pill">'+t(W.stage==="declined"?"w.rv.unchanged":"w.rv.notpub")+'</span></div>';
+  if(W.stage==="pending"){
+    h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.saved")+'</span><p>'+WS_CUR+'</p></div>';
+    h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.keepAdd")+'</span><p class="muted">'+WS_CUR+'</p><div class="ws-add-block" style="margin-top:10px"><b>'+WS_Q+'</b>'+WS_A+'</div></div>';
+  } else if(W.stage==="adopted"){
+    h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.draft")+'</span><p>'+WS_CUR+'</p><div class="ws-add-block" style="margin-top:10px"><b>'+WS_Q+'</b>'+WS_A+'</div></div>';
+  } else {
+    h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.kept")+'</span><p>'+WS_CUR+'</p><p class="muted small">'+t("w.rv.notChanged")+'</p></div>';
+  }
+  h += tog("hist", t("w.rv.hist"));
+  if(W.open.hist) h += '<div class="ws-box"><span class="ws-lab">'+t("w.rv.src")+' · northstar-notes.example/meetings</span><p>'+WS_CUR+'</p><p class="muted small">'+t("w.rv.srcNote")+'</p><p class="mono small">'+t({pending:"w.rv.v.pending",adopted:"w.rv.v.adopted",declined:"w.rv.v.declined"}[W.stage])+'</p></div>';
+  h += '<div class="ws-callout"><div><b>'+t("w.rv.publishH")+'</b><p>'+t("w.rv.publishP")+'</p></div><span class="soon">'+t("w.rv.publishSoon")+'</span></div>';
+  return h;
+}
+
+function wsChatBody(){
+  var W = S.ws, h = '', who = '<span class="who">OPCMASTER</span>';
+  function a(inner){ h += '<div class="cb-a">'+who+inner+'</div>'; }
+  function u(text){ h += '<div class="cb-u">'+esc(text)+'</div>'; }
+  if(W.discussion && W.stage==="none"){ u(t("w.c.discU")); a('<p>'+t("w.c.discA")+'</p>'); }
+  else if(W.stage==="none"){
+    if(W.measuring) a('<p>'+t("w.c.measuring")+'</p>');
+    else a('<p>'+t("w.c.suggest")+'</p><button class="btn btn-primary" data-act="ws-see">'+t("w.c.see")+' →</button>');
+  }
+  else if(W.stage==="pending"){
+    a('<div class="cc"><div class="cc-h">'+t("w.c.ccH")+'</div><div class="cc-b"><div><span class="ws-lab">'+t("w.c.orig")+'</span><div class="cc-cur">'+WS_CUR+'</div></div>'+
+      '<div class="ws-add-block"><span class="ws-lab" style="color:var(--accent-ink)">'+t("w.c.new")+'</span><b>'+WS_Q+'</b>'+WS_A+'</div></div>'+
+      '<div class="cc-f"><button class="btn btn-primary" data-act="ws-adopt">'+t("w.c.use")+'</button><button class="btn btn-quiet" data-act="ws-decline">'+t("w.c.notnow")+'</button><small>'+t("w.c.hint")+'</small></div></div>');
+  }
+  else if(W.returned && W.page==="overview"){ a('<p>'+t(W.stage==="adopted"?"w.c.savedMsg":(W.stage==="declined"?"w.c.declinedMsg":"w.c.pendingLeft"))+'</p>'); }
+  else {
+    var ad = W.stage==="adopted";
+    u(t(ad?"w.c.useU":"w.c.notnowU"));
+    a('<p>'+t(ad?"w.c.savedMsg":"w.c.declinedMsg")+'</p>');
+    h += '<div class="cb-fold">'+tog("draft", t(ad?"w.c.seeDraft":"w.c.seeOrig"))+(W.open.draft?'<div class="ws-box"><p>'+WS_CUR+'</p>'+(ad?'<div class="ws-add-block" style="margin-top:8px"><b>'+WS_Q+'</b>'+WS_A+'</div>':'')+'</div>':'')+'</div>';
+    h += '<div class="cb-fold">'+tog("earlier", t("w.c.earlier"))+(W.open.earlier?'<div class="ws-box"><span class="ws-lab">OPCMASTER · '+t("w.c.firstOrig")+'</span><p>'+WS_CUR+'</p><p>'+t("w.c.suggest")+'</p><p class="muted small">'+t("w.c.prepared")+' '+WS_Q+'</p></div>':'')+'</div>';
+  }
+  W.extra.forEach(function(m){ if(m.u) u(m.u); else a('<p>'+t(m.k)+'</p>'); });
+  return h;
+}
+function wsChat(){
+  var W = S.ws, ctx = hasTopic() && (W.page!=="overview" || W.returned) ? t(W.stage==="none"?"w.topic.site":"w.topic.name") : S.undBrand;
+  var ph = W.returned&&W.page==="overview" ? "w.c.phReturn" : (W.stage==="none"&&!W.discussion ? "w.c.phStart" : "w.c.phMore");
+  var btn = W.returned&&W.page==="overview" ? t("w.cont")+" →" : (W.stage==="none"&&!W.discussion ? t("w.c.chat") : t("w.c.send"));
+  return '<div class="ws-chat-h"><b>'+t("w.c.title")+'</b><small>'+t("w.c.current",{x:esc(ctx)})+'</small></div>'+
+    '<div class="ws-chat-b" id="ws-chat-b">'+wsChatBody()+'</div>'+
+    '<div class="ws-chat-f"><form id="ws-form"><label for="ws-input" class="sr">'+t(ph)+'</label><textarea id="ws-input" rows="2" placeholder="'+esc(t(ph))+'"></textarea><div class="row"><button class="btn btn-line" type="submit">'+btn+'</button></div></form></div>';
+}
+function renderWS(){
+  if(S.view!=="ws" || !S.ws) return;
+  var main = S.ws.page==="overview" ? wsOverview() : (S.ws.page==="topic" ? wsTopic() : wsReview());
+  $("ws-side").innerHTML = wsSide();
+  $("ws-main").innerHTML = '<div class="ws-in">'+main+'</div>';
+  var draft = $("ws-input") ? $("ws-input").value : "";
+  $("ws-chat").innerHTML = wsChat();
+  if(draft) $("ws-input").value = draft;
+  var cb = $("ws-chat-b"); if(cb) cb.scrollTop = cb.scrollHeight;
+}
+async function enterWS(mode){
+  runId++; var id = runId;
+  S.ws = wsFresh(); if(mode==="measuring"){ S.ws.measuring = true; S.ws.asked = 0; }
+  show("ws"); renderWS();
+  if(mode!=="measuring") return;
+  try{ for(var n=1;n<=10;n++){ await sleep(450); check(id); S.ws.asked = n; renderWS(); }
+    S.ws.measuring = false; S.metrics = {m:6,c:2}; renderWS(); toast(t("w.toast.done")); }catch(e){ if(e!=="cancel") throw e; }
+}
+function finishOnboarding(mode){
+  if(S.user){ enterWS(mode); return; }
+  S.pending = "ws:"+mode; openAuth("workspace");
+}
+function wsJump(k){
+  if(!S.user) S.user = {email:"owner@northstar-notes.example"};
+  runId++; S.ws = wsFresh(); var W = S.ws;
+  if(k==="c06"){ W.stage="pending"; W.page="topic"; }
+  if(k==="c06b"){ W.stage="adopted"; W.page="topic"; }
+  if(k==="c06c"){ W.stage="declined"; W.page="topic"; }
+  if(k==="c06d"){ W.discussion=true; W.page="topic"; }
+  if(k==="c07"){ W.stage="pending"; W.page="review"; }
+  if(k==="c07b"){ W.stage="adopted"; W.page="review"; }
+  if(k==="c08"){ W.stage="adopted"; W.returned=true; }
+  show("ws"); renderWS();
+}
+
 function jump(k){
   $("proto-menu").hidden = true; $("proto-btn").setAttribute("aria-expanded","false");
   if(k==="landing"){ S.user = null; resetApp(); show("landing"); return; }
+  if(/^c0/.test(k)){ if(k==="c05"){ if(!S.user) S.user = {email:"owner@northstar-notes.example"}; enterWS("measured"); } else wsJump(k); return; }
+  if(k==="auth"){ S.user = null; resetApp(); S.diag = {phase:"scope"}; S.stepsDone = 3; show("diag"); renderDiag(); finishOnboarding("measured"); return; }
   if(k==="report"||k==="signup"){ if(k==="signup") S.user = null; resetApp(); S.diag = {phase:"report"}; S.metrics = {m:6,c:2}; show("diag"); renderDiag(); if(k==="signup"){ S.pending = "report"; openAuth("report"); } return; }
   if(k==="checking"){ startCheck("northstar-notes.example"); return; }
   if(k==="confirm"||k==="scope"){ resetApp(); S.diag = {phase:k}; S.stepsDone = 3; show("diag"); renderDiag(); return; }
@@ -1225,7 +1502,7 @@ async function act(name, el){
   var id = runId;
   try{
   switch(name){
-    case "lang": S.lang = S.lang==="en"?"zh":"en"; try{ localStorage.setItem("opc-lang", S.lang); }catch(e){} applyStatic(); cache = {}; if(S.view==="diag") renderDiag(); render(); renderPreview(); renderAuth(); break;
+    case "lang": S.lang = S.lang==="en"?"zh":"en"; try{ localStorage.setItem("opc-lang", S.lang); }catch(e){} applyStatic(); cache = {}; if(S.view==="diag") renderDiag(); if(S.view==="ws") renderWS(); render(); renderPreview(); renderAuth(); break;
     case "demo": startCheck("northstar-notes.example"); break;
     case "home": resetApp(); show("landing"); break;
     case "totop": window.scrollTo({top:0, behavior:"smooth"}); setTimeout(function(){ $("site-url").focus({preventScroll:true}); }, 400); break;
@@ -1244,6 +1521,14 @@ async function act(name, el){
     case "dg-back": goPhase(S.diag.phase==="scope"?"confirm":"analyze"); if(S.diag.phase==="analyze"){ S.stepsDone = 3; renderDiagParts(); } break;
     case "dg-save": S.undBrand = $("dg-brand").value.trim()||S.undBrand; S.undWhat = $("dg-what").value.trim()||null; S.und = "edited"; renderDiag(); toast(t("c.saved")); break;
     case "dg-start": runMeasure(); break;
+    case "dg-skip": runId++; finishOnboarding("measuring"); break;
+    case "ws-go": S.ws.page = el.getAttribute("data-p"); renderWS(); $("ws-main").scrollTop = 0; break;
+    case "ws-open": var k = el.getAttribute("data-k"); S.ws.open[k] = !S.ws.open[k]; renderWS(); break;
+    case "ws-see": S.ws.stage = "pending"; S.ws.page = "topic"; renderWS(); break;
+    case "ws-adopt": S.ws.stage = "adopted"; S.ws.open.draft = false; renderWS(); break;
+    case "ws-decline": S.ws.stage = "declined"; S.ws.open.draft = false; renderWS(); break;
+    case "ws-discuss": if(S.ws.stage==="none") S.ws.discussion = true; S.ws.page = "topic"; renderWS(); break;
+    case "ws-soon": toast(t("w.toast.soon")); break;
     case "rp-cta": if(S.user) enterApp(); else { S.pending = "report"; openAuth("report"); } break;
     case "account": if(!S.user) openAuth("signup"); else toast(t("toast.signed",{email:S.user.email})); break;
     case "auth-close": closeAuth(); break;
@@ -1308,6 +1593,11 @@ document.addEventListener("submit", function(e){
   S.auth.err = false; S.auth.step = "sent"; renderAuth();
 });
 $("auth").addEventListener("click", function(e){ if(e.target===this) closeAuth(); });
+document.addEventListener("submit", function(e){
+  if(e.target.id!=="ws-form") return; e.preventDefault();
+  var v = $("ws-input").value.trim(); if(!v) return; $("ws-input").value = "";
+  S.ws.extra.push({u:v}); S.ws.extra.push({k:"w.c.free"}); renderWS();
+});
 $("ask").addEventListener("submit", function(e){
   e.preventDefault();
   var v = $("site-url").value.trim().replace(/^https?:\/\//,"").replace(/\/.*$/,"");

@@ -7,13 +7,19 @@ Clickable prototype for the opcmaster MVP ad test: a site owner checks whether C
 
 ## Flow
 
-1. **Landing** — enter a website URL, "Check for free".
-2. **Free check, 3 steps** — Your website (reading pages) → Your business (confirm what we understood) → Questions (suggested questions and brands to compare).
-3. **Free report** — how often ChatGPT mentions you and links to your site, plus the biggest gap with a locked fix.
-4. **Sign up** — Google or email link, triggered by "See your fix, free".
-5. **App (one conversation)** — Use this fix → add the text to your site → we ask ChatGPT again → before/after result and the next gap.
+What the MVP tests: will site owners try an SEO/GEO tool through a **conversation + dashboard** interface?
 
-Use the yellow **Prototype** button (bottom right) to jump to any step. The language switch covers English and 中文.
+1. **Landing** — enter a website URL, "Check for free".
+2. **Onboarding (modelled on Frase)** — C02 reading the site → C03 confirm what we understood → C04 suggested questions and brands. Every step can be skipped to start chatting.
+3. **Create workspace** — Google or email link.
+4. **Workspace: dashboard + side chat (in the spirit of Notion AI / PostHog)**
+   - C05 Site overview: two key metrics, details on demand, recent chats.
+   - C06 Decide in chat: the assistant shows the exact change; *Use this* or *Not now*; or discuss only, without a draft.
+   - C07 Review original and changes (optional), with save history folded away.
+   - C08 Coming back: picks up the saved draft, stays quiet when there's nothing new.
+5. Publishing, re-checks and the rest of the Frase feature set are marked **Coming soon**.
+
+Use the yellow **Prototype** button to jump to any screen (C02–C08). The language switch covers English and 中文.
 
 ## Notes
 
