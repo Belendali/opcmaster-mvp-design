@@ -6,7 +6,7 @@
 <title>opcmaster Loop Prototype</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Noto+Serif+SC:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Noto+Sans+SC:wght@400;500;600&display=swap">
 <style>
 :root{
   --bg:#F3F4F9; --surface:#FFFFFF; --surface-2:#E9ECF5; --sunken:#F7F8FC;
@@ -18,7 +18,7 @@
   --good:#1D7F55; --good-soft:#DFF2E8;
   --shadow:0 1px 2px rgba(19,23,51,.05), 0 12px 32px -16px rgba(19,23,51,.22);
   --scrim:rgba(13,16,38,.38);
-  --display:"Newsreader","Noto Serif SC",Georgia,"Songti SC",serif;
+  --display:"Newsreader","Noto Sans SC","PingFang SC",Georgia,sans-serif;
   --sans:"Geist",-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC","Segoe UI",sans-serif;
   --mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;
 }
@@ -747,6 +747,10 @@ body.ws-mode #dg-halftone{position:absolute;left:240px;right:384px;width:auto;he
 .chips-row{display:flex;flex-wrap:wrap;gap:6px}
 .cb-a .cmp small{font-size:10px}
 body.inner .seg{border-radius:4px;background:#1B1B1A}body.inner .seg button{border-radius:3px;font-size:12px}body.inner .seg button.on{background:#DAD7D0;color:#111}
+
+/* Chinese: no faux italics; emphasis by colour instead */
+:lang(zh) .hero h1 em{font-style:normal;color:#E8C48A}
+:lang(zh) .hero h1,:lang(zh) .dg h1,:lang(zh) .ws-h1,:lang(zh) .h2{letter-spacing:.01em}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 </style>
 
