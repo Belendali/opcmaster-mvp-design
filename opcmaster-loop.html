@@ -585,6 +585,9 @@ body.ws-mode .proto-menu{top:44px;bottom:auto}
 .ws-item small i{width:6px;height:6px;border-radius:50%;background:var(--ink-3)}
 .ws-item small i.hot{background:var(--accent)}.ws-item small i.ok{background:var(--good)}
 .ws-item.row{flex-direction:row;align-items:center;justify-content:space-between}
+.ws-item.ws-home{flex-direction:row;align-items:center;gap:10px;padding:10px 12px;font-size:15px;font-weight:500;color:var(--ink)}
+.ws-item.ws-home svg{flex-shrink:0;color:var(--ink-2)}
+.ws-item.ws-home.on svg,.ws-item.ws-home:hover svg{color:var(--accent)}
 .ws-empty{font-size:13px;color:var(--ink-3);padding:4px 10px}
 .ws-add{font-size:13px;color:var(--ink-2);padding:6px 10px;text-align:left;border-radius:8px}
 .ws-add:hover{color:var(--ink);background:var(--surface-2)}
@@ -1631,7 +1634,7 @@ function wsSide(){
   var W = S.ws, h = '';
   h += '<div class="logo">'+LOGO_IMG+'pagewise</div>';
   h += '<button class="site-switch" id="tour-project" type="button" data-act="ws-soon"><span class="site-fav">A</span><span><b>'+esc(S.undBrand)+'</b><small>'+esc(S.domain)+'</small></span></button>';
-  h += '<div class="ws-group"><button class="ws-item'+(W.page==="overview"&&!W.conv?' on':'')+'" data-act="ws-home">'+t("w.nav.overview")+'</button></div>';
+  h += '<div class="ws-group"><button class="ws-item ws-home'+(W.page==="overview"&&!W.conv?' on':'')+'" data-act="ws-home"><svg viewBox="0 0 20 20" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="6" height="8" rx="1.5"/><rect x="11" y="3" width="6" height="5" rx="1.5"/><rect x="11" y="10" width="6" height="7" rx="1.5"/><rect x="3" y="13" width="6" height="4" rx="1.5"/></svg><span>'+t("w.nav.overview")+'</span></button></div>';
   h += '<div class="ws-group"><div class="ws-gh">'+t("w.nav.convs")+'<button class="gh-add" data-act="ws-newchat" aria-label="'+t("w.nav.new")+'" title="'+t("w.nav.new")+'">+</button></div>';
   if(W.measuring) h += '<div class="ws-empty">'+t("w.nav.notopics")+'</div>';
   W.convs.forEach(function(id){ var m = W.meta[id];
