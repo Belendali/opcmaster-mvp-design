@@ -669,6 +669,50 @@ body.ws-mode .proto-menu{top:44px;bottom:auto}
   .ws-chat{border-left:0;border-top:1px solid var(--glass-line);min-height:420px}
   .ws-tiles,.ws-soonrow{grid-template-columns:1fr}
 }
+
+/* ================= INNER PAGES · warm noir ================= */
+#diag,#ws,body.inner .auth,body.inner .toast,body.inner .proto-menu,body.inner .scrim,body.inner .drawer{
+  --bg:#0F0F0F; --surface:#161616; --surface-2:#1D1D1C; --sunken:#131313;
+  --ink:#F1EEE8; --ink-2:#A9A59D; --ink-3:#6F6B64; --line:#262625; --line-2:#34332F;
+  --primary:#DAD7D0; --primary-hover:#E8E6E1; --on-primary:#111111;
+  --accent:#E0B36A; --accent-soft:rgba(224,179,106,.12); --accent-ink:#E8C48A;
+  --add-bg:rgba(224,179,106,.07); --add-line:rgba(224,179,106,.35);
+  --user-bg:#26241F; --user-ink:#F1EEE8;
+  --good:#9DB8A0; --good-soft:rgba(157,184,160,.12);
+  --glass:#131313; --glass-strong:#171717; --glass-line:#262625; --glass-edge:transparent; --glass-hi:0 0 0 0 transparent;
+  --glass-sunken:#121212; --glass-blur:none;
+  --amb1:transparent; --amb2:transparent; --amb3:transparent;
+  --scrim:rgba(0,0,0,.72); --shadow:0 24px 60px -30px rgba(0,0,0,.8);
+}
+body.inner{background:#0F0F0F}
+body.inner #diag::before,body.inner .ws::before{display:none}
+body.inner .card,body.inner .ws-tile,body.inner .ws-recent,body.inner .cc,body.inner .ws-box{-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none}
+body.inner .nav::before{background:rgba(15,15,15,.85);border-bottom-color:#1F1F1E}
+body.inner .kicker{color:var(--ink-3)}
+/* retro bevel button, as in the reference */
+body.inner .btn-primary,body.inner .dg-btn{border-radius:3px;background:#DAD7D0;color:#111;font-family:var(--mono);font-weight:500;letter-spacing:-.01em;
+  box-shadow:inset 1px 1px 0 #FFFFFF,inset -1px -1px 0 #8C8981,0 1px 0 #000,0 0 0 1px #000}
+body.inner .btn-primary:hover,body.inner .dg-btn:hover{background:#E6E4DF}
+body.inner .btn-primary:active,body.inner .dg-btn:active{box-shadow:inset -1px -1px 0 #FFFFFF,inset 1px 1px 0 #8C8981,0 0 0 1px #000}
+body.inner .btn-line{border-radius:3px;background:transparent;border-color:#34332F;font-family:var(--mono)}
+body.inner .btn-quiet{font-family:var(--mono);font-size:13px}
+body.inner .run li.done .ic,body.inner .arows li.done .ic,body.inner .stepper li.done .sn{color:#111}
+body.inner .stepper li.on .sn{box-shadow:inset 1px 1px 0 #fff,inset -1px -1px 0 #8C8981}
+body.inner .ws-tile{border-radius:6px}
+body.inner .ws-tile.focus{border-color:rgba(224,179,106,.55);box-shadow:none}
+body.inner .ws-tile .num{font-family:var(--display);font-weight:400;font-size:52px;letter-spacing:-.02em}
+body.inner .ws-tile .num span{font-family:var(--mono);font-size:16px}
+body.inner .card,body.inner .ws-box,body.inner .ws-recent,body.inner .cc,body.inner .auth-card{border-radius:6px}
+body.inner .auth-card{background:#141414;border-color:#2A2A28;box-shadow:0 40px 90px -40px #000}
+body.inner .ws-side,body.inner .ws-chat{background:#111111}
+body.inner .ws-item.on{background:#1B1B1A;box-shadow:inset 2px 0 0 var(--accent)}
+body.inner .soon{border-color:#3A3833;color:#86817A}
+body.inner .ws-add-block{border-radius:4px}
+body.inner .site-fav{background:#DAD7D0;color:#111;border-radius:3px;box-shadow:inset 1px 1px 0 #fff,inset -1px -1px 0 #8C8981}
+body.inner .cb-u{background:#26241F;border-radius:6px 6px 2px 6px}
+body.inner .pill{border-radius:3px;background:#1D1D1C}
+body.inner .dg h1,body.inner .ws-h1{font-weight:400;letter-spacing:-.02em}
+body.inner #dg-halftone{-webkit-mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.9) 45%,transparent 100%);mask-image:linear-gradient(to top,#000 0%,rgba(0,0,0,.9) 45%,transparent 100%)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 </style>
 
@@ -1221,7 +1265,7 @@ async function say(key, vars){ var ty = push({type:"typing"}); await sleep(650);
 function show(view){
   S.view = view;
   $("landing").hidden = view!=="landing"; $("app").hidden = view!=="app"; $("diag").hidden = view!=="diag"; $("ws").hidden = view!=="ws";
-  document.body.classList.toggle("in-app", view==="app"||view==="ws"); document.body.classList.toggle("ws-mode", view==="ws");
+  document.body.classList.toggle("in-app", view==="app"||view==="ws"); document.body.classList.toggle("ws-mode", view==="ws"); document.body.classList.toggle("inner", view==="ws"||view==="diag");
   if(view==="app"){ render(); } else if(view==="ws"){ renderWS(); } else if(view==="diag"){ window.scrollTo(0,0); diagLoop(); } else { window.scrollTo(0,0); var L = $("landing"); L.classList.remove("play"); void L.offsetWidth; L.classList.add("play"); heroIntro(); }
   heroLoop();
 }
@@ -1633,7 +1677,7 @@ var heroLoop = function(){}, heroIntro = function(){}, diagLoop = function(){}, 
   if(!gl){ cv.style.background = "radial-gradient(60% 50% at 10% 30%,#4E8FDC,transparent 70%),radial-gradient(50% 30% at 80% 55%,#D8D9EE,transparent 70%),radial-gradient(50% 50% at 0% 100%,#C7A6CC,transparent 70%),#1D2352"; return; }
   var vs = "attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}";
   var fs = [
-  "precision mediump float;uniform float intro;uniform vec2 res;uniform float t;uniform float cell;uniform vec2 mouse;uniform vec2 trail;uniform float hov;uniform float dpr;",
+  "precision mediump float;uniform float warm;uniform float intro;uniform vec2 res;uniform float t;uniform float cell;uniform vec2 mouse;uniform vec2 trail;uniform float hov;uniform float dpr;",
   "float glow(vec2 uv,vec2 c,vec2 s,float r){return exp(-pow(length((uv-c)*s)/r,2.));}",
   "vec3 field(vec2 uv){",
   " float asp=res.x/res.y;",
@@ -1660,7 +1704,21 @@ var heroLoop = function(){}, heroIntro = function(){}, diagLoop = function(){}, 
   " float d=length(fc-ctr);float m=1.-smoothstep(r-.7,r+.5,d);",
   " vec3 dotc=mix(cc*1.5+.04,vec3(.85,.88,1.),.2+.45*h);",
   " vec3 outc=mix(bg,dotc,m*(.22+.38*h));",
-  " outc=mix(vec3(.028,.031,.05),outc,intro);","gl_FragColor=vec4(outc,1.);}"
+  " outc=mix(vec3(.028,.031,.05),outc,intro);",
+  " if(warm>.5){",
+  "  vec2 q=abs(fc-ctr); float arm=cell*.46; float th=max(.7*dpr,cell*.14);",
+  "  float pl=max((1.-smoothstep(arm-.6,arm+.4,q.x))*(1.-smoothstep(th-.5,th+.5,q.y)),(1.-smoothstep(arm-.6,arm+.4,q.y))*(1.-smoothstep(th-.5,th+.5,q.x)));",
+  "  float k=smoothstep(.06,.42,lum);",
+  "  float hsh=fract(sin(dot(id,vec2(12.9898,78.233)))*43758.5453);",
+  "  float n=sin(ctr.x*.011+t*.15)*sin(ctr.y*.014-t*.11);",
+  "  vec3 pal=mix(vec3(.91,.88,.82),vec3(.56,.66,.61),smoothstep(-.3,.7,n));",
+  "  pal=mix(pal,vec3(.73,.47,.42),smoothstep(.35,.95,-n)*.7);",
+  "  pal=mix(pal,vec3(.85,.64,.29),step(.93,hsh)*.8);",
+  "  float tw=step(.985,hsh)*(.5+.5*sin(t*2.+hsh*40.));",
+  "  float a=pl*(k*(.42+.58*hsh)+tw*.95+h*.55)*step(.16,hsh+k*.9);",
+  "  outc=mix(vec3(.059),pal,clamp(a,0.,1.)*intro);",
+  " }",
+  "gl_FragColor=vec4(outc,1.);}"
   ].join("\n");
   HT_FS = fs;
   function sh(type, src){ var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; }
@@ -1705,7 +1763,7 @@ var heroLoop = function(){}, heroIntro = function(){}, diagLoop = function(){}, 
   gl.useProgram(pr);
   var buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
   var loc = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-  var U = {}; ["res","t","cell","mouse","trail","hov","dpr","intro"].forEach(function(n){ U[n] = gl.getUniformLocation(pr, n); });
+  var U = {}; ["res","t","cell","mouse","trail","hov","dpr","intro","warm"].forEach(function(n){ U[n] = gl.getUniformLocation(pr, n); });
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches, raf = 0, t0 = performance.now(), start = t0;
   var dpr = 1, mx = -9999, my = -9999, tx = -9999, ty = -9999, hov = 0, hovT = 0;
   document.addEventListener("pointermove", function(e){
@@ -1721,7 +1779,7 @@ var heroLoop = function(){}, heroIntro = function(){}, diagLoop = function(){}, 
     gl.viewport(0,0,w,h); gl.uniform2f(U.res, w, h); gl.uniform1f(U.cell, 5*dpr); gl.uniform1f(U.dpr, dpr);
     mx += (tx-mx)*.14; my += (ty-my)*.14; hov += (hovT-hov)*.08;
     gl.uniform2f(U.mouse, mx, my); gl.uniform2f(U.trail, mx, my); gl.uniform1f(U.hov, hov);
-    var ip = reduce ? 1 : Math.min(1, (now-start)/1400); gl.uniform1f(U.intro, 1-Math.pow(1-ip,3));
+    var ip = reduce ? 1 : Math.min(1, (now-start)/1400); gl.uniform1f(U.intro, 1-Math.pow(1-ip,3)); gl.uniform1f(U.warm, 1);
     gl.uniform1f(U.t, reduce ? 20.0 : (now-t0)/1000*.8 + 20.0);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
   }
